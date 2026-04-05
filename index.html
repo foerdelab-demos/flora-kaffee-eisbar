@@ -3,23 +3,820 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flora Kaffee & Eisbar – Demo Website</title>
+    <meta name="description" content="Flora Kaffee & Eisbar Flensburg ☕ Frischer Kaffee, hausgemachtes Eis & gemütliche Atmosphäre am Marrensdamm. Jetzt Platz reservieren!">
+    <title>Flora Kaffee & Eisbar - Flensburgs gemütlichste Kaffee- und Eisoase</title>
     <style>
-        * { margin:0; padding:0; box-sizing:border-box; }
-        body { font-family:"Segoe UI",system-ui,sans-serif; background:#0a0a0a; color:#fff; }
-        .hero { min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:2rem; }
-        .hero h1 { font-size:clamp(2rem,5vw,3.5rem); margin-bottom:0.5rem; }
-        .hero p { font-size:1.1rem; color:#aaa; max-width:600px; margin-bottom:2rem; }
-        .badge { display:inline-block; padding:0.5rem 1.5rem; border:2px solid #4f9cf7; border-radius:99px; color:#4f9cf7; font-size:0.85rem; font-weight:600; }
-        footer { text-align:center; padding:2rem; color:#555; font-size:0.8rem; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #fff;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: linear-gradient(135deg, #8B4513 0%, #A0522D 100%);
+            box-shadow: 0 2px 20px rgba(139, 69, 19, 0.3);
+            z-index: 1000;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 20px;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+            text-decoration: none;
+            letter-spacing: -0.5px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: #F4A460;
+            transform: translateY(-2px);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 50%;
+            background-color: #F4A460;
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Mobile menu toggle */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+
+        .menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background-color: white;
+            margin: 3px 0;
+            transition: 0.3s;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(135deg, rgba(139, 69, 19, 0.8) 0%, rgba(244, 164, 96, 0.8) 100%),
+                        linear-gradient(45deg, #8B4513 0%, #F4A460 50%, #D2B48C 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(244, 164, 96, 0.2) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(139, 69, 19, 0.1) 0%, transparent 50%);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(2deg); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            padding: 0 20px;
+        }
+
+        .hero h1 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            animation: slideInUp 1s ease-out;
+        }
+
+        .hero p {
+            font-size: clamp(1rem, 2.5vw, 1.3rem);
+            margin-bottom: 2rem;
+            opacity: 0.95;
+            animation: slideInUp 1s ease-out 0.3s both;
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(45deg, #F4A460 0%, #DAA520 100%);
+            color: white;
+            padding: 15px 30px;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(244, 164, 96, 0.4);
+            animation: slideInUp 1s ease-out 0.6s both;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(244, 164, 96, 0.6);
+            background: linear-gradient(45deg, #DAA520 0%, #F4A460 100%);
+        }
+
+        /* Sections */
+        section {
+            padding: 80px 0;
+            position: relative;
+        }
+
+        section:nth-child(even) {
+            background: linear-gradient(135deg, #fafafa 0%, #f5f5f5 100%);
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: clamp(2rem, 4vw, 2.5rem);
+            font-weight: 700;
+            color: #8B4513;
+            margin-bottom: 1rem;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, #8B4513 0%, #F4A460 100%);
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 3rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.7;
+        }
+
+        /* About Section */
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            margin-top: 2rem;
+        }
+
+        .about-text {
+            font-size: 1.1rem;
+            color: #555;
+            line-height: 1.8;
+        }
+
+        .about-image {
+            height: 400px;
+            background: linear-gradient(135deg, #8B4513 0%, #F4A460 50%, #D2B48C 100%);
+            border-radius: 20px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(139, 69, 19, 0.2);
+        }
+
+        .about-image::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 80px;
+            height: 80px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .about-image::after {
+            content: '☕';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 3rem;
+            color: white;
+        }
+
+        /* Services Section */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .service-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #8B4513 0%, #F4A460 100%);
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(139, 69, 19, 0.2);
+        }
+
+        .service-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #8B4513 0%, #F4A460 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .service-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #8B4513;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Hours Section */
+        .hours-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: start;
+            margin-top: 2rem;
+        }
+
+        .hours-info {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .hours-list {
+            list-style: none;
+        }
+
+        .hours-list li {
+            padding: 1rem 0;
+            border-bottom: 1px solid #eee;
+            font-size: 1.1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .hours-list li:last-child {
+            border-bottom: none;
+        }
+
+        .hours-day {
+            font-weight: 600;
+            color: #8B4513;
+        }
+
+        .hours-time {
+            color: #666;
+            font-weight: 500;
+        }
+
+        /* Location Section */
+        .location-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: start;
+            margin-top: 2rem;
+        }
+
+        .location-info {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .location-features {
+            list-style: none;
+        }
+
+        .location-features li {
+            padding: 1rem 0;
+            font-size: 1.1rem;
+            color: #555;
+            position: relative;
+            padding-left: 30px;
+        }
+
+        .location-features li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            top: 1rem;
+            color: #8B4513;
+            font-weight: bold;
+        }
+
+        .map-placeholder {
+            height: 300px;
+            background: linear-gradient(135deg, #8B4513 0%, #F4A460 100%);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            box-shadow: 0 10px 30px rgba(139, 69, 19, 0.2);
+        }
+
+        /* Contact Section */
+        .contact-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .contact-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .contact-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .contact-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(139, 69, 19, 0.15);
+        }
+
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #8B4513 0%, #F4A460 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-size: 1.2rem;
+            color: white;
+        }
+
+        .contact-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #8B4513;
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-detail {
+            color: #666;
+            font-size: 1rem;
+        }
+
+        .contact-detail a {
+            color: #8B4513;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .contact-detail a:hover {
+            color: #F4A460;
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, #8B4513 0%, #654321 100%);
+            color: white;
+            text-align: center;
+            padding: 3rem 0;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .footer-logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .footer-text {
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #F4A460;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            padding-top: 2rem;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* Mobile Styles */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .about-content,
+            .hours-content,
+            .location-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .about-image {
+                height: 250px;
+                order: -1;
+            }
+
+            section {
+                padding: 60px 0;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-info {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-links {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 15px;
+            }
+
+            nav {
+                padding: 1rem 15px;
+            }
+
+            .hero {
+                padding: 0 15px;
+            }
+
+            .service-card,
+            .hours-info,
+            .location-info,
+            .contact-card {
+                padding: 1.5rem;
+            }
+        }
+
+        /* Scroll animations */
+        @media (prefers-reduced-motion: no-preference) {
+            .service-card,
+            .hours-info,
+            .location-info,
+            .contact-card {
+                opacity: 0;
+                transform: translateY(30px);
+                animation: fadeInUp 0.8s ease-out forwards;
+            }
+
+            .service-card:nth-child(1) { animation-delay: 0.1s; }
+            .service-card:nth-child(2) { animation-delay: 0.2s; }
+            .service-card:nth-child(3) { animation-delay: 0.3s; }
+            .service-card:nth-child(4) { animation-delay: 0.4s; }
+            .service-card:nth-child(5) { animation-delay: 0.5s; }
+            .service-card:nth-child(6) { animation-delay: 0.6s; }
+
+            @keyframes fadeInUp {
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+        }
+
+        /* Accessibility */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        /* Focus styles */
+        a:focus,
+        button:focus {
+            outline: 2px solid #F4A460;
+            outline-offset: 2px;
+        }
+
+        /* High contrast mode */
+        @media (prefers-contrast: high) {
+            .hero {
+                background: #8B4513;
+            }
+            
+            .service-card,
+            .hours-info,
+            .location-info,
+            .contact-card {
+                border: 2px solid #8B4513;
+            }
+        }
     </style>
 </head>
 <body>
-    <div class="hero">
-        <h1>Flora Kaffee & Eisbar</h1>
-        <p>Willkommen auf der Demo-Website. Diese Seite wird speziell fuer Sie gestaltet.</p>
-        <span class="badge">Demo by FoerderLab</span>
-    </div>
-    <footer>&copy; 2026 Flora Kaffee & Eisbar – Erstellt von FoerderLab</footer>
-</body>
+    <header>
+        <nav class="container">
+            <a href="#home" class="logo">Flora Kaffee & Eisbar</a>
+            <ul class="nav-links">
+                <li><a href="#about">Über uns</a></li>
+                <li><a href="#services">Spezialitäten</a></li>
+                <li><a href="#hours">Öffnungszeiten</a></li>
+                <li><a href="#location">Standort</a></li>
+                <li><a href="#contact">Kontakt</a></li>
+            </ul>
+            <button class="menu-toggle" aria-label="Menü öffnen">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </nav>
+    </header>
+
+    <main>
+        <section id="home" class="hero">
+            <div class="hero-content">
+                <h1>Flensburgs gemütlichste Kaffee- und Eisoase</h1>
+                <p>Frisch gerösteter Kaffee, hausgemachtes Eis und herzliche Atmosphäre am Marrensdamm</p>
+                <a href="tel:015209861052" class="cta-button">Platz reservieren</a>
+            </div>
+        </section>
+
+        <section id="about">
+            <div class="container">
+                <h2 class="section-title">Willkommen bei Flora</h2>
+                <p class="section-subtitle">Im Herzen von Flensburg verwöhnen wir Sie mit handverlesenem Kaffee und selbstgemachtem Eis. Unser gemütliches Ambiente lädt zum Verweilen ein, während wir Ihnen mit Leidenschaft die besten Kaffeespezialitäten und erfrischende Eisleckereien servieren.</p>
+                
+                <div class="about-content">
+                    <div class="about-text">
+                        <p>Seit unserer Eröffnung sind wir stolz darauf, Flensburgs erste Adresse für erstklassigen Kaffee und hausgemachtes Eis zu sein. Jede Tasse wird mit sorgfältig ausgewählten Bohnen zubereitet, während unser Eis täglich frisch hergestellt wird.</p>
+                        <br>
+                        <p>Ob Sie eine kurze Pause vom Stadtbummel einlegen oder sich mit Freunden treffen möchten – bei Flora finden Sie die perfekte Atmosphäre für jeden Moment. Unsere warme und einladende Einrichtung spiegelt die Liebe wider, die wir in jeden Aspekt unseres Cafés stecken.</p>
+                        <br>
+                        <p>Besuchen Sie uns am Marrensdamm und lassen Sie sich von unserem einzigartigen Charme verzaubern. Wir freuen uns darauf, Sie zu verwöhnen!</p>
+                    </div>
+                    <div class="about-image"></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="services">
+            <div class="container">
+                <h2 class="section-title">Unsere Spezialitäten</h2>
+                <p class="section-subtitle">Von klassischem Espresso bis zu innovativen Eiskreationen - bei uns finden Sie für jeden Geschmack das Richtige. Alle Produkte werden täglich frisch zubereitet.</p>
+                
+                <div class="services-grid">
+                    <div class="service-card">
+                        <div class="service-icon">☕</div>
+                        <h3 class="service-title">Artisan Kaffee & Espresso</h3>
+                        <p>Handverlesene Bohnen aus aller Welt, perfekt geröstet und zubereitet. Von klassischem Espresso bis hin zu kreativen Latte-Art Kreationen.</p>
+                    </div>
+                    
+                    <div class="service-card">
+                        <div class="service-icon">🍨</div>
+                        <h3 class="service-title">Hausgemachtes Eis</h3>
+                        <p>Täglich frisch hergestellte Eissorten mit natürlichen Zutaten. Von cremiger Vanille bis zu saisonalen Spezialitäten – ein Genuss für alle Sinne.</p>
+                    </div>
+                    
+                    <div class="service-card">
+                        <div class="service-icon">🧇</div>
+                        <h3 class="service-title">Frische Waffeln & Crêpes</h3>
+                        <p>Knusprige Waffeln und zarte Crêpes, warm serviert mit einer Auswahl an köstlichen Toppings und unserem hausgemachten Eis.</p>
+                    </div>
+                    
+                    <div class="service-card">
+                        <div class="service-icon">🌟</div>
+                        <h3 class="service-title">Seasonal Specials</h3>
+                        <p>Saisonale Besonderheiten, die das Beste jeder Jahreszeit einfangen. Von Wintergewürzen bis zu sommerlichen Fruchtkreationen.</p>
+                    </div>
+                    
+                    <div class="service-card">
+                        <div class="service-icon">📦</div>
+                        <h3 class="service-title">To-Go Service</h3>
+                        <p>Nehmen Sie unsere Köstlichkeiten mit auf Ihren Weg. Perfekt verpackt für unterwegs – Qualität zum Mitnehmen.</p>
+                    </div>
+                    
+                    <div class="service-card">
+                        <div class="service-icon">🎉</div>
+                        <h3 class="service-title">Catering für Events</h3>
+                        <p>Machen Sie Ihre Feier unvergesslich mit unserem Catering-Service. Von kleinen Zusammenkünften bis zu großen Veranstaltungen.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="hours">
+            <div class="container">
+                <h2 class="section-title">Öffnungszeiten</h2>
+                <p class="section-subtitle">Besuchen Sie uns zu diesen Zeiten und genießen Sie unsere Spezialitäten in entspannter Atmosphäre. Saisonale Anpassungen vorbehalten.</p>
+                
+                <div class="hours-content">
+                    <div class="hours-info">
+                        <ul class="hours-list">
+                            <li>
+                                <span class="hours-day">Montag - Freitag</span>
+                                <span class="hours-time">08:00 - 18:00</span>
+                            </li>
+                            <li>
+                                <span class="hours-day">Samstag - Sonntag</span>
+                                <span class="hours-time">09:00 - 19:00</span>
+                            </li>
+                            <li>
+                                <span class="hours-day">Feiertage</span>
+                                <span class="hours-time">10:00 - 17:00</span>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="hours-info">
+                        <h3 style="color: #8B4513; margin-bottom: 1rem;">Besondere Hinweise</h3>
+                        <p style="margin-bottom: 1rem; color: #666;">An warmen Sommertagen haben wir oft länger geöffnet, um Ihnen die Gelegenheit zu geben, unser erfrischendes Eis zu genießen.</p>
+                        <p style="margin-bottom: 1rem; color: #666;">In den Wintermonaten bieten wir spezielle Heißgetränke-Variationen und saisonale Leckereien.</p>
+                        <p style="color: #666;">Folgen Sie uns für aktuelle Updates zu Öffnungszeiten und besonderen Events!</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="location">
+            <div class="container">
+                <h2 class="section-title">Mitten in Flensburg</h2>
+                <p class="section-subtitle">Direkt am Marrensdamm gelegen, sind wir leicht erreichbar und bieten den perfekten Ort für eine Kaffeepause beim Stadtbummel oder Shopping.</p>
+                
+                <div class="location-content">
+                    <div class="location-info">
+                        <h3 style="color: #8B4513; margin-bottom: 1rem;">Unser Standort</h3>
+                        <ul class="location-features">
+                            <li>Marrensdamm 4, 24944 Flensburg</li>
+                            <li>Parkplätze in der Nähe</li>
+                            <li>Barrierefrei zugänglich</li>
+                            <li>5 Min. zur Fußgängerzone</li>
+                        </ul>
+                        
+                        <div style="margin-top: 2rem;">
+                            <p style="color: #666; margin-bottom: 1rem;">Unser Café befindet sich im Herzen Flensburgs, umgeben von Geschäften und Sehenswürdigkeiten. Die zentrale Lage macht uns zum idealen Zwischenstopp bei Ihrem Stadtbesuch.</p>
+                            <p style="color: #666;">Mit öffentlichen Verkehrsmitteln sind wir ebenfalls gut erreichbar – die nächste Bushaltestelle ist nur wenige Gehminuten entfernt.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="map-placeholder">
+                        📍 Marrensdamm 4<br>24944 Flensburg
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact">
+            <div class="container">
+                <h2 class="section-title">Kontakt & Reservierung</h2>
+                <p class="section-subtitle">Haben Sie Fragen oder möchten einen Tisch reservieren? Rufen Sie uns an oder kommen Sie einfach
 </html>
