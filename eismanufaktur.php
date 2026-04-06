@@ -8,8 +8,8 @@ $produktionsSchritte = [
     ['nummer' => '02', 'titel' => 'Basis-Mix', 'beschreibung' => 'Milch, Sahne und natürliche Zutaten werden schonend vermischt'],
     ['nummer' => '03', 'titel' => 'Pasteurisierung', 'beschreibung' => 'Hygienische Erhitzung ohne Geschmacksverlust'],
     ['nummer' => '04', 'titel' => 'Reifeprozess', 'beschreibung' => '4-6 Stunden Ruhe für perfekte Konsistenz'],
-    ['nummer' => '05', 'titel' => 'Gefrieren', 'beschreibung' => 'Schonende Kühlung für cremige Textur']e Geschmacksentfaltung'],
-    ['nummer' => '05', 'titel' => 'Gelato-Ferstellung', 'beschreibung' => 'Frische Portionierung direkt in die Eisvitrinen']
+    ['nummer' => '05', 'titel' => 'Gefrieren', 'beschreibung' => 'Schonende Kühlung für cremige Textur'],
+    ['nummer' => '06', 'titel' => 'Gelato-Herstellung', 'beschreibung' => 'Frische Portionierung direkt in die Eisvitrinen']
 ];
 
 $saisonSorten = [

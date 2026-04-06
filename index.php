@@ -14,8 +14,7 @@ $hours_april = "Täglich 12-19 Uhr";
 $todays_flavors = [
     "Vanille Madagascar", "Stracciatella", "Pistazie", "Salted Caramel",
     "Dunkle Schokolade", "Himbeer-Sorbet", "Zitronen-Basilikum", "Cookies & Cream",
-    "Haselnuss-Krokant", "Mango-Maracuja", "Erdbeere"
-]; "Joghurt-Honig"
+    "Haselnuss-Krokant", "Mango-Maracuja", "Erdbeere", "Joghurt-Honig"
 ];
 
 // USPs für Value-First Hero

@@ -10,7 +10,7 @@ $menuCategories = [
         'items' => [
             ['name' => 'Grilled Cheese', 'price' => '5,50€', 'desc' => 'Klassiker mit geschmolzenem Käse-Trio', 'location' => 'nur Weiche'],
             ['name' => 'Hot Turkey', 'price' => '6,50€', 'desc' => 'Saftige Putenbrust mit Käse-Trio', 'location' => 'nur Weiche'],
-            ['name' => 'Salami Melt', 'price' => '6,50€', 'desc' => 'Herzhaft mit Salami und drei Käsesorten', 'location' => 'nur Weiche']nur Weiche'],
+            ['name' => 'Salami Melt', 'price' => '6,50€', 'desc' => 'Herzhaft mit Salami und drei Käsesorten', 'location' => 'nur Weiche'],
             ['name' => 'Flora Dip', 'price' => '0,50€', 'desc' => 'Mittelscharf oder Knoblauch-Dip']
         ]
     ],

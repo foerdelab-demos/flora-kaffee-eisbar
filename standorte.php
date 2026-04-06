@@ -19,7 +19,8 @@ $standorte = [
         'specialties' => ['Zentrale Lage', 'Erweiterte Öffnungszeiten'],
         'coordinates' => '54.7836, 9.4418',
         'status' => 'Heute geöffnet'
-    ] => [
+    ],
+    [
         'name' => 'Marrensdamm (Twedter Plack)',
         'address' => 'Marrensdamm 4, 24944 Flensburg',
         'description' => 'Modern & strukturiert - mit warmen Drinks, Eis und Waffeln. Hier verbinden sich zeitgemäße Ausstattung mit Flora-Tradition.',
