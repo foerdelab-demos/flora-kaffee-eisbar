@@ -2,253 +2,513 @@
 $currentPage = 'eismanufaktur'; 
 require 'includes/header.php'; 
 
-// Firmendaten
-$firmeName = "Flora Kaffee & Eisbar";
-$telefon = "01520 9861052";
-$adresse = "Marrensdamm 4, 24944 Flensburg";
-
-// Eissorten Daten
-$klassischeSorten = [
-    "Vanille Madagascar",
-    "Schokolade Ecuador",
-    "Erdbeere",
-    "Pistazie Sizilien",
-    "Stracciatella",
-    "Haselnuss",
-    "Zitrone",
-    "Joghurt"
+// Produktionsdaten
+$produktionsSchritte = [
+    ['nummer' => '01', 'titel' => 'Zutaten-Check', 'beschreibung' => 'Frische regionale Zutaten kommen rein - täglich kontrolliert'],
+    ['nummer' => '02', 'titel' => 'Basis-Mix', 'beschreibung' => 'Milch, Sahne und natürliche Zutaten werden schonend vermischt'],
+    ['nummer' => '03', 'titel' => 'Pasteurisierung', 'beschreibung' => 'Hygienische Erhitzung ohne Geschmacksverlust'],
+    ['nummer' => '04', 'titel' => 'Reifeprozess', 'beschreibung' => '4-6 Stunden Ruhe für perfekte Konsistenz'],
+    ['nummer' => '05', 'titel' => 'Gefrieren', 'beschreibung' => 'Schonende Kühlung für cremige Textur']e Geschmacksentfaltung'],
+    ['nummer' => '05', 'titel' => 'Gelato-Ferstellung', 'beschreibung' => 'Frische Portionierung direkt in die Eisvitrinen']
 ];
 
-$saisonaleSorten = [
-    "Rhabarber-Erdbeer",
-    "Holunder-Limette",
-    "Apfel-Zimt",
-    "Kürbis-Gewürz",
-    "Lebkuchen",
-    "Glühwein"
+$saisonSorten = [
+    'März-Mai' => ['Rhabarber-Crumble', 'Frühlingsbeeren', 'Holunder'],
+    'Juni-August' => ['Wassermelone', 'Pfirsich', 'Heidelbeer-Joghurt', 'Zitronenmelisse'],
+    'September-November' => ['Kürbis-Zimt', 'Apfel-Calvados', 'Pflaumen-Kompott'],
+    'Dezember-Februar' => ['Zimtstern', 'Bratapfel', 'Lebkuchen-Mousse']
 ];
 
-$besonderheiten = [
-    "Vegane Sorten auf Mandel- und Kokosbasis",
-    "Zuckerfreie Varianten mit Stevia",
-    "Glutenfreie Optionen",
-    "Lactosefreie Alternativen"
+$klassischeSorten = ['Vanille Madagascar', 'Schokolade Ecuador', 'Erdbeere', 'Haselnuss', 'Pistazie', 'Stracciatella'];
+
+$transparenzDaten = [
+    'Vanille Madagascar' => ['Milch (Hof Petersen, Glücksburg)', 'Madagascar Vanille', 'Bio-Sahne', 'Rohrzucker'],
+    'Erdbeere' => ['Erdbeeren (Obsthof Hansen, Harrislee)', 'Milch regional', 'Rohrzucker', 'Zitronensaft'],
+    'Schokolade Ecuador' => ['Ecuador Kakao 70%', 'Vollmilch', 'Bio-Sahne', 'Rohrzucker'],
+    'Pistazie' => ['Sizilianische Pistazien', 'Vollmilch', 'Mandelmilch', 'Agavendicksaft']
 ];
 ?>
 
-<main class="main-content">
+<main class="eismanufaktur-page">
     <!-- Hero Section -->
-    <section class="hero hero-secondary">
-        <div class="hero-bg" style="background: linear-gradient(135deg, #ff6b6b, #4ecdc4, #ffe66d);"></div>
+    <section class="hero-section animate-on-scroll fade-in-up">
         <div class="container">
             <div class="hero-content">
-                <h1 class="hero-title">Unsere Eismanufaktur in Flensburg</h1>
-                <p class="hero-subtitle">Frisch produziert in unserer eigenen Manufaktur – hausgemachtes Gelato mit klaren Rezepturen und ehrlichem Geschmack</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- About Eismanufaktur Section -->
-    <section class="section section-light">
-        <div class="container">
-            <div class="section-header text-center">
-                <h2 class="section-title">Handwerk trifft Leidenschaft</h2>
-                <p class="section-subtitle">In unserer eigenen Eismanufaktur in Flensburg entstehen täglich frische Gelato-Kreationen – von zeitlosen Klassikern bis hin zu saisonalen Highlights. Mit klaren Rezepturen, ehrlichem Geschmack und echter Handwerkskunst.</p>
-            </div>
-
-            <div class="grid grid-2">
-                <div class="card">
-                    <div class="card-image" style="background: linear-gradient(135deg, #667eea, #764ba2); height: 250px;"></div>
-                    <div class="card-content">
-                        <h3 class="card-title">Hausgemachtes Gelato</h3>
-                        <p class="card-text">Jeden Tag produzieren wir unser Gelato frisch in kleinen Chargen. Dabei verwenden wir nur beste Zutaten und verzichten auf künstliche Zusatzstoffe.</p>
+                <div class="hero-badge">
+                    <span class="trust-element">Heute 12 Eissorten frisch verfügbar</span>
+                </div>
+                <h1 class="hero-title">Flora Eismanufaktur</h1>
+                <p class="hero-subtitle">Hausgemachtes Gelato mit klaren Rezepturen und ehrlichem Geschmack. Keine Industrie-Masse, sondern echte Handwerkskunst aus der eigenen Manufaktur in Flensburg.</p>
+                <div class="hero-stats stagger-container">
+                    <div class="stat-item animate-on-scroll stagger-1">
+                        <span class="stat-number count-up" data-target="15">0</span>
+                        <span class="stat-label">Sorten täglich</span>
+                    </div>
+                    <div class="stat-item animate-on-scroll stagger-2">
+                        <span class="stat-number count-up" data-target="100">0</span>
+                        <span class="stat-label">% hausgemacht</span>
+                    </div>
+                    <div class="stat-item animate-on-scroll stagger-3">
+                        <span class="stat-number count-up" data-target="2">0</span>
+                        <span class="stat-label">Standorte beliefert</span>
                     </div>
                 </div>
-
-                <div class="card">
-                    <div class="card-image" style="background: linear-gradient(135deg, #f093fb, #f5576c); height: 250px;"></div>
-                    <div class="card-content">
-                        <h3 class="card-title">Ehrlicher Geschmack</h3>
-                        <p class="card-text">Klare Rezepturen ohne versteckte Zusätze - bei uns schmeckt Vanille nach Vanille und Erdbeere nach echter Frucht.</p>
+            </div>
+            <div class="hero-image">
+                <div class="img-hover-container">
+                    <div class="hero-image-placeholder" style="background: linear-gradient(135deg, #e8f5e8, #c8e6c9, #81c784);">
+                        <span class="image-text">Flora Eismanufaktur</span>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Produktionsprozess Section -->
-    <section class="section section-primary">
-        <div class="container">
-            <div class="section-header text-center text-white">
-                <h2 class="section-title">Unser Produktionsprozess</h2>
-                <p class="section-subtitle">Von der Zutat bis zum fertigen Gelato - Qualität in jedem Schritt</p>
-            </div>
-
-            <div class="grid grid-4">
-                <div class="feature-card text-center">
-                    <div class="feature-icon" style="background: linear-gradient(135deg, #84fab0, #8fd3f4); width: 80px; height: 80px; margin: 0 auto 20px; border-radius: 50%;"></div>
-                    <h4 class="feature-title">1. Zutatenauswahl</h4>
-                    <p class="feature-text">Beste Rohstoffe von ausgewählten Lieferanten</p>
-                </div>
-
-                <div class="feature-card text-center">
-                    <div class="feature-icon" style="background: linear-gradient(135deg, #a8edea, #fed6e3); width: 80px; height: 80px; margin: 0 auto 20px; border-radius: 50%;"></div>
-                    <h4 class="feature-title">2. Mischung</h4>
-                    <p class="feature-text">Sorgfältige Zubereitung nach bewährten Rezepturen</p>
-                </div>
-
-                <div class="feature-card text-center">
-                    <div class="feature-icon" style="background: linear-gradient(135deg, #ffecd2, #fcb69f); width: 80px; height: 80px; margin: 0 auto 20px; border-radius: 50%;"></div>
-                    <h4 class="feature-title">3. Gefrieren</h4>
-                    <p class="feature-text">Langsames Gefrieren für optimale Textur</p>
-                </div>
-
-                <div class="feature-card text-center">
-                    <div class="feature-icon" style="background: linear-gradient(135deg, #ff9a9e, #fecfef); width: 80px; height: 80px; margin: 0 auto 20px; border-radius: 50%;"></div>
-                    <h4 class="feature-title">4. Servieren</h4>
-                    <p class="feature-text">Frisch portioniert in unseren Eisbars</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Eissorten Section -->
-    <section class="section section-light">
-        <div class="container">
-            <div class="section-header text-center">
-                <h2 class="section-title">Unsere Eissorten</h2>
-                <p class="section-subtitle">Frisch produziert in unserer Eismanufaktur finden Sie bei uns eine vielfältige Auswahl von klassischen Sorten bis hin zu besonderen Saisonhighlights.</p>
-            </div>
-
-            <div class="grid grid-3">
-                <!-- Klassische Sorten -->
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-image" style="background: linear-gradient(135deg, #667eea, #764ba2); height: 200px;"></div>
+    <div class="container main-container">
+        <div class="sidebar-layout">
+            <aside class="sidebar animate-on-scroll fade-in-left">
+                <div class="sidebar-widget">
+                    <h3>Aktuell verfügbar</h3>
+                    <div class="verfuegbare-sorten">
+                        <?php foreach($klassischeSorten as $sorte): ?>
+                            <div class="sorte-item">
+                                <span class="sorte-dot"></span>
+                                <span><?php echo $sorte; ?></span>
+                            </div>
+                        <?php endforeach; ?>
                     </div>
-                    <div class="card-content">
-                        <h3 class="card-title">Klassische Sorten</h3>
-                        <p class="card-text">Bewährte Favoriten, die niemals aus der Mode kommen:</p>
-                        <ul class="list list-bullets">
+                </div>
+                
+                <div class="sidebar-widget">
+                    <h3>Öffnungszeiten</h3>
+                    <div class="opening-hours">
+                        <p><strong>März:</strong><br>Täglich 13-18 Uhr</p>
+                        <p><strong>Ab April:</strong><br>Täglich 12-19 Uhr</p>
+                    </div>
+                </div>
+
+                <div class="sidebar-widget">
+                    <h3>Transparenz-Siegel</h3>
+                    <div class="trust-badge">
+                        <div class="badge-icon">🔍</div>
+                        <p>Alle Zutaten transparent - keine Geheimnisse</p>
+                    </div>
+                </div>
+            </aside>
+
+            <div class="main-content">
+                <!-- Unsere Eismanufaktur -->
+                <section class="about-section animate-on-scroll fade-in-up">
+                    <div class="section-header">
+                        <h2>Unsere Eismanufaktur</h2>
+                        <p>Eigene Produktion in Flensburg mit klaren Rezepturen ohne Schnickschnack. Frische Zutaten aus der Region für saisonale Highlights statt Standard-Sortiment.</p>
+                    </div>
+                    <div class="features-grid stagger-container">
+                        <div class="feature-card animate-on-scroll stagger-1">
+                            <div class="feature-icon">🏭</div>
+                            <h3>Eigene Produktion</h3>
+                            <p>Alles wird frisch in unserer Manufaktur in Flensburg hergestellt - keine Fertigmischungen.</p>
+                        </div>
+                        <div class="feature-card animate-on-scroll stagger-2">
+                            <div class="feature-icon">📋</div>
+                            <h3>Klare Rezepturen</h3>
+                            <p>Ehrliche Zutaten ohne Schnickschnack - was draufsteht ist auch drin.</p>
+                        </div>
+                        <div class="feature-card animate-on-scroll stagger-3">
+                            <div class="feature-icon">🌱</div>
+                            <h3>Regional & Frisch</h3>
+                            <p>Zutaten aus der Region, täglich frisch verarbeitet für beide Standorte.</p>
+                        </div>
+                        <div class="feature-card animate-on-scroll stagger-4">
+                            <div class="feature-icon">🗓️</div>
+                            <h3>Saisonale Highlights</h3>
+                            <p>Keine Standard-Sorten das ganze Jahr - bei uns gibt's was die Saison hergibt.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Produktionsprozess Timeline -->
+                <section class="produktionsprozess-section animate-on-scroll fade-in-up">
+                    <div class="section-header">
+                        <h2>Wie entsteht unser Gelato?</h2>
+                        <p>Von der frischen Zutat bis zum fertigen Eis - so läuft die Produktion in unserer Manufaktur ab. Kein Hexenwerk, sondern ehrliches Handwerk.</p>
+                    </div>
+                    <div class="timeline-container">
+                        <?php foreach($produktionsSchritte as $index => $schritt): ?>
+                            <div class="timeline-item animate-on-scroll stagger-<?php echo $index + 1; ?>">
+                                <div class="timeline-number"><?php echo $schritt['nummer']; ?></div>
+                                <div class="timeline-content">
+                                    <h3><?php echo $schritt['titel']; ?></h3>
+                                    <p><?php echo $schritt['beschreibung']; ?></p>
+                                </div>
+                                <div class="timeline-image">
+                                    <div class="timeline-placeholder" style="background: linear-gradient(135deg, #f8f9fa, #e9ecef, #dee2e6);">
+                                        <span class="step-icon"><?php echo $schritt['nummer']; ?></span>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                </section>
+
+                <!-- Saisonkalender -->
+                <section class="saisonkalender-section animate-on-scroll fade-in-up">
+                    <div class="section-header">
+                        <h2>Saisonkalender - Was gibt's wann?</h2>
+                        <p>Echte saisonale Sorten statt 08/15-Programm das ganze Jahr. Hier siehst du welche Highlights zu welcher Zeit bei uns laufen.</p>
+                    </div>
+                    <div class="saison-grid stagger-container">
+                        <?php foreach($saisonSorten as $saison => $sorten): ?>
+                            <div class="saison-card animate-on-scroll stagger-1">
+                                <div class="saison-header">
+                                    <h3><?php echo $saison; ?></h3>
+                                    <div class="saison-icon">
+                                        <?php 
+                                        $icons = ['🌸', '☀️', '🍂', '❄️'];
+                                        echo $icons[array_search($saison, array_keys($saisonSorten))];
+                                        ?>
+                                    </div>
+                                </div>
+                                <div class="sorten-liste">
+                                    <?php foreach($sorten as $sorte): ?>
+                                        <div class="sorte-tag"><?php echo $sorte; ?></div>
+                                    <?php endforeach; ?>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                    <div class="klassische-sorten animate-on-scroll fade-in-up">
+                        <h3>Klassiker das ganze Jahr</h3>
+                        <div class="klassiker-grid">
                             <?php foreach($klassischeSorten as $sorte): ?>
-                                <li><?= $sorte ?></li>
+                                <div class="klassiker-item"><?php echo $sorte; ?></div>
                             <?php endforeach; ?>
-                        </ul>
+                        </div>
                     </div>
-                </div>
+                </section>
 
-                <!-- Saisonale Sorten -->
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-image" style="background: linear-gradient(135deg, #f093fb, #f5576c); height: 200px;"></div>
+                <!-- Transparenz Showcase -->
+                <section class="transparenz-section animate-on-scroll fade-in-up">
+                    <div class="section-header">
+                        <h2>Transparenz-Glaskasten</h2>
+                        <p>Was ist drin in unserem Eis? Hier stehen alle Hauptzutaten schwarz auf weiß - mit regionalen Lieferanten wo möglich.</p>
                     </div>
-                    <div class="card-content">
-                        <h3 class="card-title">Saisonale Highlights</h3>
-                        <p class="card-text">Besondere Kreationen je nach Jahreszeit:</p>
-                        <ul class="list list-bullets">
-                            <?php foreach($saisonaleSorten as $sorte): ?>
-                                <li><?= $sorte ?></li>
-                            <?php endforeach; ?>
-                        </ul>
+                    <div class="transparenz-grid stagger-container">
+                        <?php foreach($transparenzDaten as $sorte => $zutaten): ?>
+                            <div class="transparenz-card animate-on-scroll stagger-1">
+                                <div class="sorte-header">
+                                    <h3><?php echo $sorte; ?></h3>
+                                    <div class="transparenz-badge">100% transparent</div>
+                                </div>
+                                <div class="zutaten-liste">
+                                    <?php foreach($zutaten as $zutat): ?>
+                                        <div class="zutat-item">
+                                            <span class="zutat-dot"></span>
+                                            <span class="zutat-text"><?php echo $zutat; ?></span>
+                                        </div>
+                                    <?php endforeach; ?>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
                     </div>
-                </div>
+                </section>
 
-                <!-- Besondere Sorten -->
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-image" style="background: linear-gradient(135deg, #84fab0, #8fd3f4); height: 200px;"></div>
+                <!-- Flora-Qualität -->
+                <section class="qualitaet-section animate-on-scroll fade-in-up">
+                    <div class="section-header">
+                        <h2>Flora-Qualität</h2>
+                        <p>Wir reden nicht um den heißen Brei - Flora steht für echte Manufaktur-Qualität ohne Marketing-Blabla. Pure Leidenschaft für Geschmack.</p>
                     </div>
-                    <div class="card-content">
-                        <h3 class="card-title">Besondere Optionen</h3>
-                        <p class="card-text">Für jeden Geschmack und jede Ernährungsform:</p>
-                        <ul class="list list-bullets">
-                            <?php foreach($besonderheiten as $besonderheit): ?>
-                                <li><?= $besonderheit ?></li>
-                            <?php endforeach; ?>
-                        </ul>
+                    <div class="qualitaet-grid stagger-container">
+                        <div class="qualitaet-card animate-on-scroll stagger-1">
+                            <div class="qualitaet-icon">🚫</div>
+                            <h3>Keine Fertigmischungen</h3>
+                            <p>Alles wird von Grund auf selbst hergestellt - keine Industrie-Basis aus dem Großhandel.</p>
+                        </div>
+                        <div class="qualitaet-card animate-on-scroll stagger-2">
+                            <div class="qualitaet-icon">🛠️</div>
+                            <h3>Handwerkliche Produktion</h3>
+                            <p>Jede Charge wird von Hand überwacht - Maschinen helfen, aber der Mensch entscheidet.</p>
+                        </div>
+                        <div class="qualitaet-card animate-on-scroll stagger-3">
+                            <div class="qualitaet-icon">🏠</div>
+                            <h3>Lokale Wurzeln</h3>
+                            <p>Seit Jahren in Flensburg verwurzelt - echte Nachbarschafts-Eisdiele mit eigener Produktion.</p>
+                        </div>
+                        <div class="qualitaet-card animate-on-scroll stagger-4">
+                            <div class="qualitaet-icon">🔍</div>
+                            <h3>Transparente Herstellung</h3>
+                            <p>Keine Geheimnisse - wer will kann gerne mal in die Produktion schauen.</p>
+                        </div>
                     </div>
-                </div>
+                </section>
+
+                <!-- Social Proof -->
+                <section class="social-proof-section animate-on-scroll fade-in-up">
+                    <div class="bewertungs-snippet">
+                        <div class="rating-stars">★★★★★</div>
+                        <p class="rating-text">"Authentisches Eis wie früher" - Flensburger Kunden</p>
+                    </div>
+                </section>
+
+                <!-- CTA Section -->
+                <section class="cta-section animate-on-scroll fade-in-up">
+                    <div class="cta-content">
+                        <h2>Lust auf frisches Gelato?</h2>
+                        <p>Komm vorbei und überzeug dich selbst von unserem hausgemachten Eis. Beide Standorte haben täglich frische Sorten.</p>
+                        <div class="cta-buttons">
+                            <a href="standorte.php" class="btn btn-primary hero-cta">Standorte anzeigen</a>
+                            <a href="speisekarte.php" class="btn btn-secondary">Aktuelle Sorten</a>
+                        </div>
+                    </div>
+                </section>
             </div>
         </div>
-    </section>
+    </div>
 
-    <!-- Qualitätsversprechen Section -->
-    <section class="section section-dark">
-        <div class="container">
-            <div class="section-header text-center">
-                <h2 class="section-title">Unser Qualitätsversprechen</h2>
-                <p class="section-subtitle">Was uns von anderen unterscheidet</p>
-            </div>
-
-            <div class="grid grid-2">
-                <div class="content-block">
-                    <h3 class="content-title">Natürliche Zutaten</h3>
-                    <p class="content-text">Wir verwenden ausschließlich natürliche Zutaten ohne künstliche Aromen, Farbstoffe oder Konservierungsmittel. Unsere Früchte beziehen wir von regionalen Lieferanten, unsere Milch und Sahne kommen von Höfen aus der Umgebung.</p>
-                    
-                    <h3 class="content-title">Handwerkliche Tradition</h3>
-                    <p class="content-text">Jede Charge wird von Hand gerührt und überwacht. Wir folgen traditionellen italienischen Gelato-Rezepturen, die wir über Jahre perfektioniert haben. Dabei achten wir auf die richtige Balance zwischen Süße, Säure und Textur.</p>
-                </div>
-
-                <div class="content-block">
-                    <h3 class="content-title">Tägliche Frische</h3>
-                    <p class="content-text">Jeden Morgen beginnt die Produktion für den Tag. So garantieren wir, dass Sie immer frisches Gelato bekommen. Was nicht verkauft wird, kommt nicht in den nächsten Tag - Qualität vor Quantität.</p>
-                    
-                    <h3 class="content-title">Transparenz</h3>
-                    <p class="content-text">Wir verstecken nichts vor unseren Kunden. Fragen Sie gerne nach Zutaten oder Allergenen - wir geben Ihnen gerne Auskunft über jeden Bestandteil unseres Gelatos.</p>
-                </div>
-            </div>
+    <!-- Sticky Trust Badge -->
+    <div class="sticky-trust-badge">
+        <div class="trust-content">
+            <span class="trust-icon">🏭</span>
+            <span class="trust-text">Täglich frisch in eigener Manufaktur</span>
         </div>
-    </section>
-
-    <!-- Innovation Section -->
-    <section class="section section-light">
-        <div class="container">
-            <div class="section-header text-center">
-                <h2 class="section-title">Innovation & Tradition</h2>
-                <p class="section-subtitle">Wie wir Bewährtes mit Neuem verbinden</p>
-            </div>
-
-            <div class="grid grid-3">
-                <div class="feature-box text-center">
-                    <div class="feature-icon" style="background: linear-gradient(135deg, #667eea, #764ba2); width: 100px; height: 100px; margin: 0 auto 30px; border-radius: 50%;"></div>
-                    <h4 class="feature-title">Neue Geschmacksrichtungen</h4>
-                    <p class="feature-text">Regelmäßig entwickeln wir neue Sorten und testen ungewöhnliche Kombinationen. Unsere Kunden sind dabei unsere wichtigsten Geschmackstester.</p>
-                </div>
-
-                <div class="feature-box text-center">
-                    <div class="feature-icon" style="background: linear-gradient(135deg, #f093fb, #f5576c); width: 100px; height: 100px; margin: 0 auto 30px; border-radius: 50%;"></div>
-                    <h4 class="feature-title">Moderne Technik</h4>
-                    <p class="feature-text">Wir nutzen moderne Eismaschinen und Kühlverfahren, um die perfekte Konsistenz zu erreichen, ohne dabei den handwerklichen Charakter zu verlieren.</p>
-                </div>
-
-                <div class="feature-box text-center">
-                    <div class="feature-icon" style="background: linear-gradient(135deg, #84fab0, #8fd3f4); width: 100px; height: 100px; margin: 0 auto 30px; border-radius: 50%;"></div>
-                    <h4 class="feature-title">Nachhaltigkeit</h4>
-                    <p class="feature-text">Wir achten auf umweltfreundliche Verpackungen und beziehen unsere Zutaten so regional wie möglich. Nachhaltigkeit ist Teil unserer Philosophie.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- CTA Section -->
-    <section class="section section-primary">
-        <div class="container">
-            <div class="cta-content text-center">
-                <h2 class="cta-title">Besuchen Sie unsere Eismanufaktur</h2>
-                <p class="cta-text">Erleben Sie selbst den Unterschied von handgemachtem Gelato. Besuchen Sie uns an einem unserer beiden Standorte in Flensburg und lassen Sie sich von der Vielfalt und Qualität überzeugen.</p>
-                <div class="cta-buttons">
-                    <a href="standorte.php" class="btn btn-secondary btn-large">Unsere Standorte</a>
-                    <a href="speisekarte.php" class="btn btn-outline btn-large">Zur Speisekarte</a>
-                </div>
-                <div class="contact-info">
-                    <p class="contact-phone">
-                        <a href="tel:<?= $telefon ?>"><?= $telefon ?></a>
-                    </p>
-                    <p class="contact-address"><?= $adresse ?></p>
-                </div>
-            </div>
-        </div>
-    </section>
+    </div>
 </main>
 
-<?php require 'includes/footer.php'; ?>
+<style>
+.eismanufaktur-page .hero-section {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    padding: 120px 0 80px;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-content {
+    max-width: 600px;
+}
+
+.hero-badge .trust-element {
+    background: #28a745;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.hero-stats {
+    display: flex;
+    gap: 30px;
+    margin-top: 30px;
+}
+
+.stat-item {
+    text-align: center;
+}
+
+.stat-number {
+    display: block;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #28a745;
+    line-height: 1;
+}
+
+.stat-label {
+    font-size: 14px;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.timeline-container {
+    position: relative;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.timeline-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 60px;
+    position: relative;
+}
+
+.timeline-item:nth-child(even) {
+    flex-direction: row-reverse;
+}
+
+.timeline-number {
+    width: 60px;
+    height: 60px;
+    background: #28a745;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    font-weight: 700;
+    flex-shrink: 0;
+    z-index: 2;
+    position: relative;
+}
+
+.timeline-content {
+    flex: 1;
+    padding: 0 40px;
+    max-width: 300px;
+}
+
+.timeline-image {
+    width: 200px;
+    height: 150px;
+    flex-shrink: 0;
+}
+
+.timeline-placeholder {
+    width: 100%;
+    height: 100%;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.step-icon {
+    font-size: 48px;
+    font-weight: 700;
+    color: #666;
+}
+
+.saison-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    margin-bottom: 50px;
+}
+
+.saison-card {
+    background: white;
+    border-radius: 16px;
+    padding: 30px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    border: 1px solid #e9ecef;
+}
+
+.saison-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.saison-icon {
+    font-size: 2rem;
+}
+
+.sorten-liste {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.sorte-tag {
+    background: #f8f9fa;
+    border: 1px solid #dee2e6;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 14px;
+    color: #495057;
+}
+
+.klassische-sorten {
+    background: #f8f9fa;
+    padding: 40px;
+    border-radius: 16px;
+    text-align: center;
+}
+
+.klassiker-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.klassiker-item {
+    background: #28a745;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-weight: 500;
+}
+
+.transparenz-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.transparenz-card {
+    background: white;
+    border: 2px solid #28a745;
+    border-radius: 16px;
+    padding: 30px;
+}
+
+.sorte-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.transparenz-badge {
+    background: #28a745;
+    color: white;
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.zutaten-liste {
+    space-y: 12px;
+}
+
+.zutat-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 0;
+}
+
+.zutat-dot {
+    width: 6px;
+    height: 6px;
+    background: #28a745;
+    border-radius: 50%;
+}
+
+.qualitaet-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+}
+
+.qualitaet-card {
+    text-align: center;
+    padding: 30px 20px;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+}
+
+.qualitaet-icon {
+    font-size: 3rem;
+    margin-bottom: 20px;
+}
+
+.social-proof
