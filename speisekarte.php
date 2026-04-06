@@ -1,213 +1,442 @@
-<?php $currentPage = 'speisekarte'; require 'includes/header.php'; ?>
+<?php 
+$currentPage = 'speisekarte'; 
+require 'includes/header.php'; 
 
-<?php
-// Speisekarte Daten
-$neuheiten = [
-    ['name' => 'Grilled Cheese Sandwich', 'price' => '5,50€', 'description' => 'Knusprig geröstetes Sandwich mit geschmolzenem Käse (nur in Weiche)'],
-    ['name' => 'Hot Turkey Sandwich', 'price' => '6,50€', 'description' => 'Warmes Sandwich mit saftigem Truthahn, frischem Salat und hausgemachter Sauce'],
-    ['name' => 'Avocado Toast', 'price' => '4,80€', 'description' => 'Geröstetes Brot mit cremiger Avocado, Tomaten und Gewürzen'],
-    ['name' => 'Bagel mit Lachs', 'price' => '7,20€', 'description' => 'Frischer Bagel mit geräuchertem Lachs, Frischkäse und Kräutern']
+// Menü-Daten
+$menuCategories = [
+    'neuheiten' => [
+        'name' => 'Neuheiten',
+        'icon' => '🆕',
+        'items' => [
+            ['name' => 'Grilled Cheese', 'price' => '5,50€', 'desc' => 'Klassiker mit geschmolzenem Käse-Trio', 'location' => 'nur Weiche'],
+            ['name' => 'Hot Turkey', 'price' => '6,50€', 'desc' => 'Saftige Putenbrust mit Käse-Trio', 'location' => 'nur Weiche'],
+            ['name' => 'Salami Melt', 'price' => '6,50€', 'desc' => 'Herzhaft mit Salami und drei Käsesorten', 'location' => 'nur Weiche']nur Weiche'],
+            ['name' => 'Flora Dip', 'price' => '0,50€', 'desc' => 'Mittelscharf oder Knoblauch-Dip']
+        ]
+    ],
+    'eis' => [
+        'name' => 'Eisbecher & Gelato',
+        'icon' => '🍨',
+        'items' => [
+            ['name' => 'Flora Signature Becher', 'price' => '8,90€', 'desc' => 'Hausgemachtes Vanille-Gelato mit warmen Brownies und Karamell-Swirl', 'fresh' => true],
+            ['name' => 'Schokoladen-Träume', 'price' => '7,50€', 'desc' => 'Drei Kugeln Schoko-Gelato mit Haselnuss-Crunch', 'fresh' => true],
+            ['name' => 'Saisonaler Fruchtbecher', 'price' => '6,90€', 'desc' => 'Wechselnde Früchte-Gelato mit frischen Beeren', 'seasonal' => true],
+            ['name' => 'Einzelkugel Gelato', 'price' => '1,80€', 'desc' => 'Aus täglich 12 hausgemachten Sorten'],
+            ['name' => 'Waffelbecher Klein', 'price' => '5,20€', 'desc' => 'Zwei Kugeln mit Sahne und Sauce'],
+            ['name' => 'Waffelbecher Groß', 'price' => '7,40€', 'desc' => 'Vier Kugeln mit allem Drum und Dran']
+        ]
+    ],
+    'waffeln' => [
+        'name' => 'Frische Waffeln',
+        'icon' => '🧇',
+        'items' => [
+            ['name' => 'Klassische Waffel', 'price' => '4,50€', 'desc' => 'Mit Puderzucker und Sahne'],
+            ['name' => 'Waffel mit Früchten', 'price' => '6,20€', 'desc' => 'Saisonale Früchte und Vanille-Sauce'],
+            ['name' => 'Schoko-Waffel', 'price' => '5,80€', 'desc' => 'Mit Nutella und gehackten Nüssen'],
+            ['name' => 'Flora Special Waffel', 'price' => '7,90€', 'desc' => 'Mit zwei Kugeln Gelato und Toppings nach Wahl']
+        ]
+    ],
+    'kaffee' => [
+        'name' => 'Barista-Kaffee',
+        'icon' => '☕',
+        'items' => [
+            ['name' => 'ONOMA Filterkaffee', 'price' => '3,00€', 'desc' => 'Single Origin, täglich frisch geröstet'],
+            ['name' => 'Espresso', 'price' => '2,20€', 'desc' => 'Doppelter Ristretto aus der La Marzocco'],
+            ['name' => 'Flat White', 'price' => '3,80€', 'desc' => 'Doppelter Ristretto mit seidigem Milchschaum'],
+            ['name' => 'Cappuccino', 'price' => '4,00€', 'desc' => 'Klassiker mit cremigem Milchschaum'],
+            ['name' => 'Latte Macchiato', 'price' => '4,20€', 'desc' => 'Geschichtet im hohen Glas'],
+            ['name' => 'Chai Latte', 'price' => '4,20€', 'desc' => 'Würzig-süß mit Mandelmilch optional']
+        ]
+    ],
+    'kalt' => [
+        'name' => 'Kaltgetränke',
+        'icon' => '🥤',
+        'items' => [
+            ['name' => 'Cold Brew Kaffee', 'price' => '3,50€', 'desc' => '12h kalt extrahiert, smooth und mild'],
+            ['name' => 'Eiskaffee Flora', 'price' => '4,90€', 'desc' => 'Mit Vanille-Gelato und Sahne'],
+            ['name' => 'Fritz-Kola', 'price' => '2,80€', 'desc' => 'Regional und authentisch'],
+            ['name' => 'Milchshake', 'price' => '5,50€', 'desc' => 'Mit zwei Kugeln Gelato nach Wahl'],
+            ['name' => 'Hausgemachte Limonade', 'price' => '3,20€', 'desc' => 'Zitrone-Minze oder Holunder'],
+            ['name' => 'Stilles/Sprudel Wasser', 'price' => '2,00€', 'desc' => 'Regional aus Schleswig-Holstein']
+        ]
+    ],
+    'snacks' => [
+        'name' => 'Basics & Snacks',
+        'icon' => '🥨',
+        'items' => [
+            ['name' => 'Butter-Croissant', 'price' => '2,50€', 'desc' => 'Täglich frisch vom Bäcker'],
+            ['name' => 'Pain au Chocolat', 'price' => '3,20€', 'desc' => 'Mit echter belgischer Schokolade'],
+            ['name' => 'Käsekuchen', 'price' => '4,20€', 'desc' => 'Hausgemacht nach Omas Rezept'],
+            ['name' => 'Brownie', 'price' => '3,80€', 'desc' => 'Saftig-schokoladig, oft noch warm'],
+            ['name' => 'Tee-Auswahl', 'price' => '2,00€', 'desc' => 'Earl Grey, Pfefferminz, Früchte, Grün- oder Schwarztee']
+        ]
+    ]
 ];
 
-$heissgetraenke = [
-    ['name' => 'Flat White', 'price' => '3,80€', 'description' => 'Barista-Kaffee mit ONOMA-Röstung – doppelter Ristretto mit samtig aufgeschäumter Milch'],
-    ['name' => 'Cappuccino', 'price' => '4,00€', 'description' => 'Klassischer Siebträger-Cappuccino mit ONOMA-Röstung – kräftig, ausgewogen und sorgfältig zubereitet'],
-    ['name' => 'Latte Macchiato', 'price' => '4,20€', 'description' => 'Geschichteter Milchkaffee in hohem Glas'],
-    ['name' => 'Espresso', 'price' => '2,80€', 'description' => 'Perfekt extrahierter italienischer Espresso'],
-    ['name' => 'Americano', 'price' => '3,20€', 'description' => 'Espresso mit heißem Wasser verlängert'],
-    ['name' => 'Heiße Schokolade', 'price' => '3,90€', 'description' => 'Cremige heiße Schokolade mit Sahne'],
-    ['name' => 'Chai Latte', 'price' => '4,10€', 'description' => 'Gewürzter Tee mit aufgeschäumter Milch']
-];
-
-$waffeln = [
-    ['name' => 'Klassische Waffel', 'price' => '3,50€', 'description' => 'Frisch gebackene belgische Waffel mit Puderzucker'],
-    ['name' => 'Waffel mit Eis', 'price' => '5,80€', 'description' => 'Warme Waffel mit zwei Kugeln hausgemachtem Gelato'],
-    ['name' => 'Waffel Flora Spezial', 'price' => '7,20€', 'description' => 'Waffel mit Eis, Sahne, frischen Früchten und Schokosoße'],
-    ['name' => 'Waffel mit Nutella', 'price' => '4,90€', 'description' => 'Knusprige Waffel mit cremigem Nutella'],
-    ['name' => 'Früchtewaffel', 'price' => '6,50€', 'description' => 'Waffel mit saisonalen Früchten und Sahne']
-];
-
-$eisbecher = [
-    ['name' => 'Spaghetti Eis', 'price' => '4,80€', 'description' => 'Klassiker durch die Spätzlepresse mit Erdbeersoße'],
-    ['name' => 'Heiße Liebe', 'price' => '5,20€', 'description' => 'Vanilleeis mit heißen Himbeeren und Sahne'],
-    ['name' => 'Schwarzwälder Kirsch', 'price' => '6,80€', 'description' => 'Schokoladen- und Vanilleeis mit Kirschen und Sahne'],
-    ['name' => 'Flora Becher Spezial', 'price' => '7,50€', 'description' => 'Drei Kugeln Eis mit Früchten, Sahne und Schokosoße'],
-    ['name' => 'Bananensplit', 'price' => '6,20€', 'description' => 'Drei Kugeln Eis mit halber Banane und Toppings'],
-    ['name' => 'Eiskaffee', 'price' => '4,90€', 'description' => 'Kalter Kaffee mit Vanilleeis und Sahne']
-];
-
-$kaltgetraenke = [
-    ['name' => 'Cold Brew Coffee', 'price' => '3,60€', 'description' => 'Kalt gebrühter Kaffee, mild und aromatisch'],
-    ['name' => 'Iced Latte', 'price' => '4,40€', 'description' => 'Espresso mit kalter Milch und Eis'],
-    ['name' => 'Frappuccino', 'price' => '4,80€', 'description' => 'Cremiger Kaffee-Milchshake mit Sahne'],
-    ['name' => 'Fresh Orange Juice', 'price' => '3,20€', 'description' => 'Frisch gepresster Orangensaft'],
-    ['name' => 'Limonade', 'price' => '2,80€', 'description' => 'Hausgemachte Zitronenlimonade'],
-    ['name' => 'Eistee', 'price' => '3,00€', 'description' => 'Verschiedene Sorten hausgemachter Eistee']
-];
-
-$basics = [
-    ['name' => 'Croissant', 'price' => '2,20€', 'description' => 'Frisches französisches Croissant'],
-    ['name' => 'Muffin', 'price' => '2,80€', 'description' => 'Hausgebackener Muffin verschiedener Sorten'],
-    ['name' => 'Kuchen des Tages', 'price' => '3,50€', 'description' => 'Täglich wechselnde hausgemachte Kuchenauswahl'],
-    ['name' => 'Pretzel', 'price' => '1,80€', 'description' => 'Frische Laugenbrezeln'],
-    ['name' => 'Cookies', 'price' => '2,40€', 'description' => 'Hausgemachte Cookies verschiedener Sorten']
-];
+$freshToday = ['Vanille-Bourbon', 'Stracciatella', 'Pistazie', 'Erdbeere', 'Schokolade', 'Salted Caramel', 'Zitrone', 'Heidelbeere', 'Haselnuss', 'Cookies & Cream', 'Mango-Maracuja', 'Zimt'];
 ?>
 
-<main>
-    <section class="hero hero-menu">
+<main class="menu-page">
+    <!-- Hero Section mit Live-Verfügbarkeit -->
+    <section class="hero-menu animate-on-scroll fade-in-up">
         <div class="container">
             <div class="hero-content">
-                <h1>Unsere Speisekarte</h1>
-                <p class="hero-subtitle">Eine Karte für beide Standorte: Entdecken Sie alle Eisbecher, Waffeln, Drinks und Klassiker der Flora Kaffee & Eisbar. Von Neuheiten wie Grilled Cheese Sandwiches bis hin zu klassischen Eisbechern.</p>
-            </div>
-        </div>
-    </section>
-
-    <section class="menu-highlights">
-        <div class="container">
-            <h2>Highlights unserer Karte</h2>
-            <p>Probieren Sie unsere neuen Grilled Cheese Sandwiches (nur in Weiche), genießen Sie klassische Eisbecher oder unseren perfekt zubereiteten Flat White mit doppeltem Ristretto.</p>
-            <div class="highlights-grid">
-                <div class="highlight-card">
-                    <div class="highlight-icon"></div>
-                    <h3>Grilled Cheese</h3>
-                    <span class="price">5,50€</span>
-                    <p>Knusprig geröstetes Sandwich mit geschmolzenem Käse</p>
-                </div>
-                <div class="highlight-card">
-                    <div class="highlight-icon"></div>
-                    <h3>Hot Turkey</h3>
-                    <span class="price">6,50€</span>
-                    <p>Warmes Sandwich mit saftigem Truthahn</p>
-                </div>
-                <div class="highlight-card">
-                    <div class="highlight-icon"></div>
-                    <h3>Flat White</h3>
-                    <span class="price">3,80€</span>
-                    <p>Doppelter Ristretto mit cremiger Milch</p>
-                </div>
-                <div class="highlight-card">
-                    <div class="highlight-icon"></div>
-                    <h3>Cappuccino</h3>
-                    <span class="price">4,00€</span>
-                    <p>Klassisch mit ONOMA-Röstung</p>
+                <h1 class="hero-title">Echte Speisekarte</h1>
+                <p class="hero-subtitle">Eine Karte für beide Standorte - entdecke alle Eisbecher, Waffeln, Drinks und Klassiker mit ehrlichen Preisen und authentischen Zutaten.</p>
+                <div class="live-availability">
+                    <span class="availability-badge">
+                        <span class="pulse-dot"></span>
+                        Heute <?php echo count($freshToday); ?> Eissorten frisch verfügbar
+                    </span>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="menu-section">
+    <!-- Social Proof -->
+    <section class="social-proof animate-on-scroll fade-in-up">
         <div class="container">
-            <div class="menu-category">
-                <h2>Neuheiten</h2>
-                <p class="category-description">Entdecken Sie unsere neuesten Kreationen - von herzhaften Sandwiches bis zu innovativen Getränken.</p>
-                <div class="menu-items">
-                    <?php foreach($neuheiten as $item): ?>
-                        <div class="menu-item">
-                            <div class="item-header">
-                                <h3><?php echo $item['name']; ?></h3>
-                                <span class="price"><?php echo $item['price']; ?></span>
-                            </div>
-                            <p class="item-description"><?php echo $item['description']; ?></p>
-                        </div>
-                    <?php endforeach; ?>
-                </div>
+            <div class="review-snippet">
+                <div class="stars">★★★★★</div>
+                <p>"Authentisches Eis wie früher - endlich mal wieder echter Geschmack!" <span>- Flensburger Kunden</span></p>
             </div>
+        </div>
+    </section>
 
-            <div class="menu-category">
-                <h2>Heißgetränke</h2>
-                <p class="category-description">Perfekt zubereitete Kaffeespezialitäten mit unserer exklusiven ONOMA-Röstung.</p>
-                <div class="menu-items">
-                    <?php foreach($heissgetraenke as $item): ?>
-                        <div class="menu-item">
-                            <div class="item-header">
-                                <h3><?php echo $item['name']; ?></h3>
-                                <span class="price"><?php echo $item['price']; ?></span>
-                            </div>
-                            <p class="item-description"><?php echo $item['description']; ?></p>
-                        </div>
-                    <?php endforeach; ?>
-                </div>
+    <!-- Heute frisch Banner -->
+    <section class="daily-fresh-banner animate-on-scroll fade-in-up">
+        <div class="container">
+            <div class="fresh-header">
+                <h2>Heute frisch aus der Manufaktur</h2>
+                <span class="fresh-count"><?php echo count($freshToday); ?> Sorten verfügbar</span>
             </div>
-
-            <div class="menu-category">
-                <h2>Waffeln</h2>
-                <p class="category-description">Frisch gebackene belgische Waffeln - klassisch oder mit besonderen Toppings.</p>
-                <div class="menu-items">
-                    <?php foreach($waffeln as $item): ?>
-                        <div class="menu-item">
-                            <div class="item-header">
-                                <h3><?php echo $item['name']; ?></h3>
-                                <span class="price"><?php echo $item['price']; ?></span>
-                            </div>
-                            <p class="item-description"><?php echo $item['description']; ?></p>
-                        </div>
-                    <?php endforeach; ?>
-                </div>
+            <div class="fresh-flavors">
+                <?php foreach($freshToday as $index => $flavor): ?>
+                <span class="flavor-tag animate-on-scroll fade-in-up stagger-<?php echo ($index % 4) + 1; ?>">
+                    <?php echo $flavor; ?>
+                </span>
+                <?php endforeach; ?>
             </div>
+        </div>
+    </section>
 
-            <div class="menu-category">
-                <h2>Eisbecher</h2>
-                <p class="category-description">Klassische und besondere Eisbecher mit unserem hausgemachten Gelato.</p>
-                <div class="menu-items">
-                    <?php foreach($eisbecher as $item): ?>
-                        <div class="menu-item">
-                            <div class="item-header">
-                                <h3><?php echo $item['name']; ?></h3>
-                                <span class="price"><?php echo $item['price']; ?></span>
-                            </div>
-                            <p class="item-description"><?php echo $item['description']; ?></p>
-                        </div>
-                    <?php endforeach; ?>
-                </div>
+    <!-- Sticky Navigation -->
+    <nav class="menu-nav sticky-nav" id="menuNav">
+        <div class="container">
+            <div class="nav-items">
+                <?php foreach($menuCategories as $key => $category): ?>
+                <a href="#<?php echo $key; ?>" class="nav-item" data-target="<?php echo $key; ?>">
+                    <span class="nav-icon"><?php echo $category['icon']; ?></span>
+                    <span class="nav-label"><?php echo $category['name']; ?></span>
+                </a>
+                <?php endforeach; ?>
             </div>
+        </div>
+    </nav>
 
-            <div class="menu-category">
-                <h2>Kaltgetränke</h2>
-                <p class="category-description">Erfrischende Getränke für warme Tage - von Cold Brew bis zu frischen Säften.</p>
-                <div class="menu-items">
-                    <?php foreach($kaltgetraenke as $item): ?>
-                        <div class="menu-item">
-                            <div class="item-header">
-                                <h3><?php echo $item['name']; ?></h3>
-                                <span class="price"><?php echo $item['price']; ?></span>
-                            </div>
-                            <p class="item-description"><?php echo $item['description']; ?></p>
-                        </div>
-                    <?php endforeach; ?>
+    <!-- Filter Section -->
+    <section class="menu-filters animate-on-scroll fade-in-up">
+        <div class="container">
+            <div class="filter-row">
+                <div class="filter-group">
+                    <label>Preisklasse:</label>
+                    <button class="filter-btn active" data-price="all">Alle</button>
+                    <button class="filter-btn" data-price="budget">Bis 3€</button>
+                    <button class="filter-btn" data-price="mid">3-6€</button>
+                    <button class="filter-btn" data-price="premium">6€+</button>
                 </div>
-            </div>
-
-            <div class="menu-category">
-                <h2>Basics & Snacks</h2>
-                <p class="category-description">Kleine Leckereien und Gebäck für den süßen oder herzhaften Hunger zwischendurch.</p>
-                <div class="menu-items">
-                    <?php foreach($basics as $item): ?>
-                        <div class="menu-item">
-                            <div class="item-header">
-                                <h3><?php echo $item['name']; ?></h3>
-                                <span class="price"><?php echo $item['price']; ?></span>
-                            </div>
-                            <p class="item-description"><?php echo $item['description']; ?></p>
-                        </div>
-                    <?php endforeach; ?>
+                <div class="filter-group">
+                    <label>Besonders:</label>
+                    <button class="filter-btn" data-special="fresh">Heute frisch</button>
+                    <button class="filter-btn" data-special="seasonal">Saisonal</button>
+                    <button class="filter-btn" data-special="signature">Signature</button>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="menu-info">
+    <!-- Menu Categories -->
+    <div class="menu-sections">
+        <?php foreach($menuCategories as $key => $category): ?>
+        <section id="<?php echo $key; ?>" class="menu-category animate-on-scroll fade-in-up">
+            <div class="container">
+                <div class="category-header">
+                    <h2 class="category-title">
+                        <span class="category-icon"><?php echo $category['icon']; ?></span>
+                        <?php echo $category['name']; ?>
+                    </h2>
+                    <?php if($key === 'neuheiten'): ?>
+                    <span class="location-badge">Sandwiches nur in Weiche</span>
+                    <?php endif; ?>
+                </div>
+                
+                <div class="menu-grid stagger-container">
+                    <?php foreach($category['items'] as $index => $item): ?>
+                    <div class="menu-item animate-on-scroll fade-in-up stagger-<?php echo ($index % 3) + 1; ?>" 
+                         data-price="<?php echo floatval(str_replace(['€', ','], ['.', ''], $item['price'])); ?>">
+                        <div class="item-header">
+                            <h3 class="item-name"><?php echo $item['name']; ?></h3>
+                            <span class="item-price"><?php echo $item['price']; ?></span>
+                        </div>
+                        <p class="item-desc"><?php echo $item['desc']; ?></p>
+                        
+                        <div class="item-badges">
+                            <?php if(isset($item['fresh']) && $item['fresh']): ?>
+                            <span class="badge fresh">Heute frisch</span>
+                            <?php endif; ?>
+                            <?php if(isset($item['seasonal']) && $item['seasonal']): ?>
+                            <span class="badge seasonal">Saisonal</span>
+                            <?php endif; ?>
+                            <?php if(isset($item['location'])): ?>
+                            <span class="badge location"><?php echo $item['location']; ?></span>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                    <?php endforeach; ?>
+                </div>
+                
+                <?php if($key === 'kaffee'): ?>
+                <div class="category-note">
+                    <p>Alle Kaffeegetränke mit Sirup nach Wahl verfeinern: <strong>Karamell, Zimt, Vanille oder Lebkuchen +0,50€</strong></p>
+                    <p>Echter Barista-Kaffee mit ONOMA-Röstung aus Hamburg</p>
+                </div>
+                <?php endif; ?>
+            </div>
+        </section>
+        <?php endforeach; ?>
+    </div>
+
+    <!-- Manufaktur Transparenz -->
+    <section class="transparency-section animate-on-scroll fade-in-up">
         <div class="container">
-            <div class="info-grid">
-                <div class="info-card">
-                    <h3>Allergene & Unverträglichkeiten</h3>
-                    <p>Informieren Sie unser Team gerne über Allergien oder Unverträglichkeiten. Wir beraten Sie gerne zu den Inhaltsstoffen unserer Produkte und finden gemeinsam eine passende Alternative.</p>
+            <div class="transparency-content">
+                <h2>Transparenz ist unser Ding</h2>
+                <p>Alle Zutaten transparent - keine Geheimnisse. Unser Gelato entsteht täglich frisch in der eigenen Manufaktur mit Zutaten, die wir auch selbst essen würden.</p>
+                <div class="transparency-features">
+                    <div class="feature">
+                        <span class="feature-icon">🏭</span>
+                        <span>Eigene Manufaktur</span>
+                    </div>
+                    <div class="feature">
+                        <span class="feature-icon">📋</span>
+                        <span>Offene Rezepturen</span>
+                    </div>
+                    <div class="feature">
+                        <span class="feature-icon">🌱</span>
+                        <span>Regionale Zutaten</span>
+                    </div>
                 </div>
-                <div class="info-card">
-                    <h3>Saisonale Spezialitäten</h3>
-                    <p>Unsere Karte erweitert sich regelmäßig um saisonale Highlights. Fragen Sie nach aktuellen Eissorten, besonderen Getränkevariationen oder limitierten Speisen der Saison.</p>
+                <a href="eismanufaktur.php" class="cta-button">Manufaktur entdecken</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Standort-Info -->
+    <section class="location-info animate-on-scroll fade-in-up">
+        <div class="container">
+            <div class="location-grid">
+                <div class="location-card">
+                    <h3>Marrensdamm (Hauptfiliale)</h3>
+                    <p>Komplettes Sortiment plus Eistorten-Konfigurator</p>
+                    <p><strong>März:</strong> Täglich 13-18 Uhr<br><strong>Ab April:</strong> Täglich 12-19 Uhr</p>
                 </div>
-                <div class="info-card">
-                    <h3>Standort-Besonderheiten</h3>
-                    <p>Einige Neuheiten wie unsere Grilled Cheese Sandwiches sind derzeit nur an unserem Standort in Weiche verfügbar. Informieren Sie sich vor Ihrem Besuch über standortspezifische Angebote.</p>
+                <div class="location-card">
+                    <h3>Weiche (Sandwich-Spezial)</h3>
+                    <p>Alle Klassiker plus frische Grilled-Sandwiches</p>
+                    <p><strong>März:</strong> Täglich 13-18 Uhr<br><strong>Ab April:</strong> Täglich 12-19 Uhr</p>
+                </div>
+            </div>
+            <div class="location-cta">
+                <a href="standorte.php" class="cta-button">Beide Standorte erkunden</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Kontakt CTA -->
+    <section class="contact-cta animate-on-scroll fade-in-up">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Fragen zur Speisekarte?</h2>
+                <p>Allergien, Sonderwünsche oder Bestellungen - wir sind da.</p>
+                <div class="contact-options">
+                    <a href="tel:015209861052" class="contact-option">
+                        <span class="option-icon">📞</span>
+                        <span>01520 9861052</span>
+                    </a>
+                    <a href="kontakt.php" class="contact-option">
+                        <span class="option-icon">💬</span>
+                        <span>Nachricht senden</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<!-- Handwerk Indicator (Sticky Badge) -->
+<div class="handwork-badge">
+    <span class="badge-text">Täglich frisch in eigener Manufaktur</span>
+    <span class="badge-icon">🏭</span>
+</div>
+
+<style>
+.menu-page {
+    padding-top: 0;
+}
+
+.hero-menu {
+    background: linear-gradient(135deg, #2c5f41 0%, #1a3a28 100%);
+    color: white;
+    padding: 8rem 0 4rem;
+    position: relative;
+}
+
+.hero-menu::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 20"><circle cx="10" cy="10" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="30" cy="5" r="0.5" fill="rgba(255,255,255,0.1)"/><circle cx="50" cy="15" r="1.5" fill="rgba(255,255,255,0.1)"/><circle cx="70" cy="8" r="0.8" fill="rgba(255,255,255,0.1)"/><circle cx="90" cy="12" r="1.2" fill="rgba(255,255,255,0.1)"/></svg>');
+    animation: float 20s ease-in-out infinite;
+}
+
+.hero-content {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.hero-title {
+    font-size: 3.5rem;
+    font-weight: 900;
+    margin-bottom: 1rem;
+    line-height: 1.1;
+}
+
+.hero-subtitle {
+    font-size: 1.3rem;
+    margin-bottom: 2rem;
+    opacity: 0.9;
+    line-height: 1.6;
+}
+
+.live-availability {
+    margin-top: 2rem;
+}
+
+.availability-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(255,255,255,0.15);
+    padding: 0.8rem 1.5rem;
+    border-radius: 50px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.2);
+}
+
+.pulse-dot {
+    width: 8px;
+    height: 8px;
+    background: #4ade80;
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+}
+
+.social-proof {
+    padding: 2rem 0;
+    background: #f8fafc;
+    text-align: center;
+}
+
+.review-snippet {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.stars {
+    color: #fbbf24;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.daily-fresh-banner {
+    background: linear-gradient(135deg, #fef3c7 0%, #f59e0b 100%);
+    padding: 3rem 0;
+}
+
+.fresh-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.fresh-header h2 {
+    font-size: 2.5rem;
+    color: #92400e;
+}
+
+.fresh-count {
+    background: rgba(255,255,255,0.8);
+    padding: 0.5rem 1rem;
+    border-radius: 25px;
+    color: #92400e;
+    font-weight: 600;
+}
+
+.fresh-flavors {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.flavor-tag {
+    background: white;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    color: #92400e;
+    font-weight: 500;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+}
+
+.flavor-tag:hover {
+    transform: translateY(-2px);
+}
+
+.menu-nav {
+    background: white;
+    border-bottom: 2px solid #e5e7eb;
+    padding: 1rem 0;
+    z-index: 100;
+}
+
+.menu-nav.sticky-nav {
+    position: sticky;
+    top: 80px;
+}
+
+.nav-items {
+    display: flex;
+    gap: 2rem;
+    overflow-x: auto;
+    padding-bottom: 0.5rem;
+}
+
+.nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    color: #6b7280;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    padding: 0.5rem 1rem;
+    border-radius: 12px;
+}
+
+.nav-
