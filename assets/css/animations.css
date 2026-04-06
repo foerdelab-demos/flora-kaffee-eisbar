@@ -1,0 +1,449 @@
+/* animations.css - Restaurant Website Animations */
+
+/* CSS Custom Properties */
+:root {
+  --color-primary: #2D5939;
+  --color-secondary: #E8A776;
+  --color-accent: #F4E6D8;
+  --color-warm-white: #FFF8F0;
+  --shadow-soft: 0 4px 20px rgba(45, 89, 57, 0.1);
+  --shadow-hover: 0 8px 32px rgba(45, 89, 57, 0.15);
+  --timing-smooth: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --timing-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+/* Scroll-triggered Animations */
+.animate-on-scroll {
+  opacity: 0;
+  transition: all 0.8s var(--timing-smooth);
+}
+
+.animate-on-scroll.visible {
+  opacity: 1;
+}
+
+.fade-in-up {
+  transform: translateY(30px);
+}
+
+.fade-in-up.visible {
+  transform: translateY(0);
+}
+
+.fade-in-left {
+  transform: translateX(-30px);
+}
+
+.fade-in-left.visible {
+  transform: translateX(0);
+}
+
+.fade-in-right {
+  transform: translateX(30px);
+}
+
+.fade-in-right.visible {
+  transform: translateX(0);
+}
+
+.scale-in {
+  transform: scale(0.9);
+}
+
+.scale-in.visible {
+  transform: scale(1);
+}
+
+.blur-in {
+  filter: blur(5px);
+}
+
+.blur-in.visible {
+  filter: blur(0);
+}
+
+/* Staggered Animation Classes */
+.stagger-1 { animation-delay: 0.1s; }
+.stagger-2 { animation-delay: 0.2s; }
+.stagger-3 { animation-delay: 0.3s; }
+.stagger-4 { animation-delay: 0.4s; }
+.stagger-5 { animation-delay: 0.5s; }
+.stagger-6 { animation-delay: 0.6s; }
+
+/* Hero Animations */
+.hero-title {
+  animation: slideInDown 1.2s var(--timing-bounce) 0.3s both;
+}
+
+.hero-subtitle {
+  animation: fadeInUp 0.8s var(--timing-smooth) 0.6s both;
+}
+
+.hero-cta {
+  animation: bounceIn 0.8s var(--timing-bounce) 0.9s both;
+}
+
+/* Eissorte des Tages Spotlight */
+.ice-spotlight {
+  position: relative;
+  transition: transform 0.4s var(--timing-smooth);
+}
+
+.ice-spotlight:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-hover);
+}
+
+.ice-spotlight::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, rgba(45, 89, 57, 0.1), rgba(232, 167, 118, 0.1));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.ice-spotlight:hover::before {
+  opacity: 1;
+}
+
+.fresh-badge {
+  animation: pulseGlow 2s ease-in-out infinite;
+  background: var(--color-primary);
+  color: white;
+}
+
+.availability-drops {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+}
+
+.drop {
+  width: 8px;
+  height: 8px;
+  background: var(--color-secondary);
+  border-radius: 50% 50% 50% 0;
+  animation: float 2s ease-in-out infinite;
+}
+
+/* Manufaktur-Transparenz Glaskasten */
+.transparency-glass {
+  backdrop-filter: blur(10px);
+  background: rgba(244, 230, 216, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.3s var(--timing-smooth);
+  max-height: 0;
+  overflow: hidden;
+}
+
+.transparency-glass.expanded {
+  max-height: 500px;
+  box-shadow: var(--shadow-soft);
+}
+
+/* Standort-Lebenszeichen */
+.location-status {
+  position: relative;
+}
+
+.status-open {
+  animation: pulse 2s infinite;
+  background: radial-gradient(circle, #2D5939 0%, #E8A776 100%);
+  color: white;
+}
+
+.live-counter::before {
+  counter-increment: ice-count;
+  content: counter(ice-count);
+}
+
+/* Hover Micro-Interactions - Cards */
+.card-hover {
+  transition: all 0.3s var(--timing-smooth);
+  box-shadow: var(--shadow-soft);
+}
+
+.card-hover:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: var(--shadow-hover);
+}
+
+/* Hover Micro-Interactions - Buttons */
+.btn-ripple {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-ripple::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.4s, height 0.4s;
+}
+
+.btn-ripple:hover::after {
+  width: 300px;
+  height: 300px;
+}
+
+/* Hover Micro-Interactions - Nav Links */
+.nav-link-draw {
+  position: relative;
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
+.nav-link-draw::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--color-secondary);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s var(--timing-smooth);
+}
+
+.nav-link-draw:hover::after {
+  transform: scaleX(1);
+}
+
+/* Hover Micro-Interactions - Images */
+.img-hover-container {
+  overflow: hidden;
+}
+
+.img-hover-container img {
+  transition: transform 0.4s var(--timing-smooth);
+}
+
+.img-hover-container:hover img {
+  transform: scale(1.05);
+}
+
+/* 3D-Rundgang Button */
+.tour-360-btn .icon {
+  transition: transform 0.8s var(--timing-smooth);
+}
+
+.tour-360-btn:hover .icon {
+  transform: rotate(360deg);
+}
+
+/* Telefonnummer One-Click Call */
+.tel-highlight {
+  transition: all 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.tel-highlight:active {
+  box-shadow: 0 0 15px rgba(45, 89, 57, 0.5);
+  background: rgba(45, 89, 57, 0.1);
+}
+
+/* Routenplaner Loading Spinner */
+.route-spinner {
+  position: relative;
+}
+
+.route-spinner.loading::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--color-accent);
+  border-top: 2px solid var(--color-primary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  transform: translate(-50%, -50%);
+}
+
+/* Counter Animation */
+.count-up {
+  display: inline-block;
+  font-feature-settings: "tnum";
+}
+
+/* Parallax Classes */
+.parallax-slow {
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  transform: translateZ(0);
+}
+
+.parallax-medium {
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  transform: translateZ(0);
+}
+
+/* Loading Skeleton */
+.skeleton {
+  background: linear-gradient(90deg, var(--color-accent) 25%, rgba(244, 230, 216, 0.5) 50%, var(--color-accent) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+/* Keyframe Library */
+@keyframes slideInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes bounceIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+  70% {
+    transform: scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow: 0 0 10px rgba(45, 89, 57, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(45, 89, 57, 0.6);
+  }
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.05);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+/* Opening Hours Pulse */
+.hours-open {
+  color: var(--color-primary);
+  animation: pulse 2s infinite;
+}
+
+/* Smooth Scroll */
+.smooth-scroll {
+  scroll-behavior: smooth;
+}
+
+/* Background Flash */
+.highlight-flash {
+  animation: backgroundFlash 1s ease-out;
+}
+
+@keyframes backgroundFlash {
+  0% {
+    background-color: transparent;
+  }
+  50% {
+    background-color: rgba(232, 167, 118, 0.2);
+  }
+  100% {
+    background-color: transparent;
+  }
+}
+
+/* Prefers Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  
+  .parallax-slow,
+  .parallax-medium {
+    background-attachment: scroll;
+  }
+  
+  .animate-on-scroll {
+    opacity: 1;
+    transform: none;
+  }
+  
+  .skeleton {
+    background: var(--color-accent);
+  }
+}
