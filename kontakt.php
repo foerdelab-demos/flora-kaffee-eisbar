@@ -1,263 +1,380 @@
 <?php 
 $currentPage = 'kontakt';
 
-// Kontaktformular verarbeiten
-$formSubmitted = false;
-$formErrors = [];
-$formSuccess = false;
+// Kontaktformular Handler
+$message = '';
+$messageType = '';
 
 if ($_POST) {
-    $name = trim($_POST['name'] ?? '');
-    $email = trim($_POST['email'] ?? '');
-    $phone = trim($_POST['phone'] ?? '');
-    $subject = trim($_POST['subject'] ?? '');
-    $message = trim($_POST['message'] ?? '');
+    $name = htmlspecialchars($_POST['name'] ?? '');
+    $email = htmlspecialchars($_POST['email'] ?? '');
+    $phone = htmlspecialchars($_POST['phone'] ?? '');
+    $subject = htmlspecialchars($_POST['subject'] ?? '');
+    $messageText = htmlspecialchars($_POST['message'] ?? '');
     
-    // Validierung
-    if (empty($name)) {
-        $formErrors[] = 'Name ist erforderlich';
+    if ($name && $email && $messageText) {
+        // Hier würde normalerweise die E-Mail verschickt werden
+        $message = 'Danke für deine Nachricht! Das Flora-Team meldet sich binnen 24h bei dir.';
+        $messageType = 'success';
+        $messageType = 'success';
+    } else {
+        $message = 'Bitte fülle alle Pflichtfelder aus.';
+        $messageType = 'error';
     }
-    if (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $formErrors[] = 'Gültige E-Mail-Adresse ist erforderlich';
-    }
-    if (empty($subject)) {
-        $formErrors[] = 'Betreff ist erforderlich';
-    }
-    if (empty($message)) {
-        $formErrors[] = 'Nachricht ist erforderlich';
-    }
-    
-    // Wenn keine Fehler, dann erfolgreich verarbeitet
-    if (empty($formErrors)) {
-        $formSuccess = true;
-        // Hier würde normalerweise die E-Mail versendet werden
-    }
-    
-    $formSubmitted = true;
 }
 
-// Firmendaten
-$businessName = 'Flora Kaffee & Eisbar';
-$businessPhone = '01520 9861052';
-$businessAddress = 'Marrensdamm 4, 24944 Flensburg';
-$businessCity = 'Flensburg';
-$openingHours = 'März: Täglich 13–18 Uhr, Ab April: Täglich 12–19 Uhr';
-
-// Standorte
-$locations = [
-    [
-        'name' => 'Standort Twedter Plack',
-        'address' => 'Marrensdamm 4, 24944 Flensburg',
-        'description' => 'Modern & strukturiert – unser Standort am Twedter Plack bietet das volle Flora-Sortiment: hausgemachtes Gelato aus eigener Manufaktur, Barista-Kaffee mit ONOMA-Röstung und frische Waffeln. Hier können Sie auch individuelle Eistorten bestellen.'
+// Firmen-Daten
+$companyData = [
+    'name' => 'Flora Kaffee & Eisbar Flensburg',
+    'phone' => '01520 9861052',
+    'locations' => [
+        [
+            'name' => 'Marrensdamm',
+            'address' => 'Marrensdamm 4, 24944 Flensburg',
+            'parking' => 'Kostenlose Parkplätze direkt vor dem Laden',
+            'transport' => 'Bus Linie 1, 2 - Haltestelle Marrensdamm'
+        ],
+        [
+            'name' => 'Weiche',
+            'address' => 'Alter Husumer Weg 260, Flensburg',
+            'parking' => 'Großer Parkplatz am Standort verfügbar',
+            'transport' => 'Bus Linie 4 - Haltestelle Weiche Dorf'
+        ]
     ],
-    [
-        'name' => 'Standort Weiche',
-        'address' => 'Alter Husumer Weg 260, 24943 Flensburg',
-        'description' => 'Unser gemütlicher Ursprung in Weiche – hier fühlt sich Nachbarschaft zuhause. Auch hier servieren wir unser komplettes Flora-Angebot. Ideal für entspannte Genussmomente mit Familie und Freunden.'
+    'hours' => [
+        'march' => 'März: Täglich 13-18 Uhr',
+        'april' => 'Ab April: Täglich 12-19 Uhr'
     ]
 ];
 
-require 'includes/header.php'; 
+require 'includes/header.php'; 'includes/header.php'; 
 ?>
 
-<main>
-    <!-- Hero Section -->
-    <section class="hero hero-contact">
-        <div class="hero-content" style="background: linear-gradient(135deg, #8B4513 0%, #D2691E 100%);">
-            <div class="container">
-                <h1>Kontakt</h1>
-                <p class="hero-subtitle">Wir freuen uns auf Ihre Nachricht und beantworten gerne alle Fragen rund um unser hausgemachtes Gelato, Events und Eistorten</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Kontakt Hauptinformation -->
-    <section class="section">
+<main class="page-content">
+    <!-- Trust Element: Response Garantie -->
+    <div class="trust-badge response-guarantee animate-on-scroll fade-in-up">
         <div class="container">
-            <div class="grid grid-2">
-                <div class="contact-info">
-                    <h2>Haben Sie Fragen?</h2>
-                    <p class="section-intro">Haben Sie Fragen zu unseren Produkten, möchten eine Eistorte bestellen oder ein Event planen? Kontaktieren Sie uns gerne telefonisch oder besuchen Sie uns direkt in einem unserer beiden Standorte.</p>
-                    
-                    <div class="contact-details">
-                        <div class="contact-item">
-                            <h3>Telefon</h3>
-                            <p><a href="tel:<?php echo $businessPhone; ?>" class="contact-link"><?php echo $businessPhone; ?></a></p>
-                            <p class="contact-note">Täglich während der Öffnungszeiten erreichbar</p>
-                        </div>
-                        
-                        <div class="contact-item">
-                            <h3>Hauptstandort</h3>
-                            <p><?php echo $businessAddress; ?></p>
-                            <p class="contact-note">Twedter Plack - Unser Hauptstandort mit vollstem Angebot</p>
-                        </div>
-                        
-                        <div class="contact-item">
-                            <h3>Öffnungszeiten</h3>
-                            <p><?php echo $openingHours; ?></p>
-                            <p class="contact-note">Beide Standorte haben die gleichen Öffnungszeiten</p>
-                        </div>
-                        
-                        <div class="contact-item">
-                            <h3>Spezialitäten</h3>
-                            <ul class="specialty-list">
-                                <li>Hausgemachtes Gelato in über 20 Sorten</li>
-                                <li>Barista-Kaffee mit ONOMA-Röstung</li>
-                                <li>Frische Waffeln täglich gebacken</li>
-                                <li>Individuelle Eistorten auf Bestellung</li>
-                                <li>Event-Catering und mobile Eisbar</li>
-                            </ul>
-                        </div>
+            <span class="trust-icon">⚡</span>
+            <span>Antwort binnen 24h garantiert</span>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero-section contact-hero">
+        <div class="container">
+            <div class="hero-content animate-on-scroll fade-in-up">
+                <h1 class="hero-title">Lass uns reden</h1>
+                <p class="hero-subtitle">Fragen, Wünsche oder Lust auf ein Gespräch? Flora ist für dich da - direkt, ehrlich und ohne Umschweife.</p>
+                <div class="trust-element live-availability">
+                    <span class="status-dot"></span>
+                    <span>Heute 12 Eissorten frisch verfügbar</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Kontakt Hub Section -->
+    <section class="contact-hub animate-on-scroll fade-in-up">
+        <div class="container">
+            <div class="contact-grid">
+                <div class="contact-card phone-card stagger-1">
+                    <div class="contact-icon">📞</div>
+                    <h3>Direkt anrufen</h3>
+                    <p>Am schnellsten erreichst du uns telefonisch</p>
+                    <a href="tel:01520 9861052" class="cta-button primary">
+                        <strong>01520 9861052</strong>
+                    </a>
+                    <div class="response-indicator">
+                        <span class="indicator-dot active"></span>
+                        <span>Meist sofort erreichbar</span>
                     </div>
                 </div>
-                
-                <!-- Kontaktformular -->
-                <div class="contact-form-container">
-                    <div class="card">
-                        <h3>Schreiben Sie uns</h3>
-                        
-                        <?php if ($formSubmitted && $formSuccess): ?>
-                            <div class="form-success">
-                                <p>Vielen Dank für Ihre Nachricht! Wir melden uns so schnell wie möglich bei Ihnen zurück.</p>
-                            </div>
-                        <?php elseif ($formSubmitted && !empty($formErrors)): ?>
-                            <div class="form-errors">
-                                <p>Bitte korrigieren Sie folgende Fehler:</p>
-                                <ul>
-                                    <?php foreach ($formErrors as $error): ?>
-                                        <li><?php echo htmlspecialchars($error); ?></li>
-                                    <?php endforeach; ?>
-                                </ul>
-                            </div>
-                        <?php endif; ?>
-                        
-                        <form method="POST" class="contact-form">
-                            <div class="form-group">
-                                <label for="name">Name *</label>
-                                <input type="text" id="name" name="name" required value="<?php echo htmlspecialchars($_POST['name'] ?? ''); ?>">
-                            </div>
-                            
-                            <div class="form-group">
-                                <label for="email">E-Mail-Adresse *</label>
-                                <input type="email" id="email" name="email" required value="<?php echo htmlspecialchars($_POST['email'] ?? ''); ?>">
-                            </div>
-                            
-                            <div class="form-group">
-                                <label for="phone">Telefonnummer</label>
-                                <input type="tel" id="phone" name="phone" value="<?php echo htmlspecialchars($_POST['phone'] ?? ''); ?>">
-                            </div>
-                            
-                            <div class="form-group">
-                                <label for="subject">Betreff *</label>
-                                <select id="subject" name="subject" required>
-                                    <option value="">Bitte wählen...</option>
-                                    <option value="eistorte" <?php echo ($_POST['subject'] ?? '') === 'eistorte' ? 'selected' : ''; ?>>Eistorte bestellen</option>
-                                    <option value="event" <?php echo ($_POST['subject'] ?? '') === 'event' ? 'selected' : ''; ?>>Event-Catering</option>
-                                    <option value="produkte" <?php echo ($_POST['subject'] ?? '') === 'produkte' ? 'selected' : ''; ?>>Fragen zu Produkten</option>
-                                    <option value="allergie" <?php echo ($_POST['subject'] ?? '') === 'allergie' ? 'selected' : ''; ?>>Allergien/Unverträglichkeiten</option>
-                                    <option value="sonstiges" <?php echo ($_POST['subject'] ?? '') === 'sonstiges' ? 'selected' : ''; ?>>Sonstiges</option>
-                                </select>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label for="message">Ihre Nachricht *</label>
-                                <textarea id="message" name="message" rows="5" required placeholder="Teilen Sie uns mit, wie wir Ihnen helfen können..."><?php echo htmlspecialchars($_POST['message'] ?? ''); ?></textarea>
-                            </div>
-                            
-                            <button type="submit" class="btn btn-primary">Nachricht senden</button>
-                            
-                            <p class="form-note">* Pflichtfelder. Ihre Daten werden vertraulich behandelt und nicht an Dritte weitergegeben.</p>
-                        </form>
+
+                <div class="contact-card location-card stagger-2">
+                    <div class="contact-icon">📍</div>
+                    <h3>Einfach vorbeikommen</h3>
+                    <p>Zwei Standorte - beide mit dem vollen Flora-Erlebnis</p>
+                    <a href="#standorte" class="cta-button secondary">Standorte anzeigen</a>
+                    <div class="response-indicator">
+                        <span class="indicator-dot active"></span>
+                        <span>Immer persönlich vor Ort</span>
+                    </div>
+                </div>
+
+                <div class="contact-card message-card stagger-3">
+                    <div class="contact-icon">✉️</div>
+                    <h3>Nachricht schreiben</h3>
+                    <p>Für ausführliche Anfragen oder Event-Planung</p>
+                    <a href="#kontaktformular" class="cta-button secondary">Formular nutzen</a>
+                    <div class="response-indicator">
+                        <span class="indicator-dot active"></span>
+                        <span>Antwort binnen 24h</span>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Standorte -->
-    <section class="section section-alt">
+    <!-- Standorte Section -->
+    <section id="standorte" class="locations-section animate-on-scroll fade-in-up">
         <div class="container">
             <div class="section-header">
-                <h2>So finden Sie uns</h2>
-                <p class="section-intro">Flora Kaffee & Eisbar ist an zwei Standorten in Flensburg für Sie da. Hauptstandort am Marrensdamm 4 und in Weiche am Alter Husumer Weg 260. Beide Standorte sind gut erreichbar und bieten Parkplätze.</p>
+                <h2>Unsere Standorte</h2>
+                <p class="section-subtitle">Komm einfach vorbei - in Weiche oder am Marrensdamm. Flora ist immer nah, immer authentisch.</p>
             </div>
-            
-            <div class="grid grid-2">
-                <?php foreach ($locations as $location): ?>
-                    <div class="card location-card">
-                        <div class="location-image" style="background: linear-gradient(45deg, #DEB887 0%, #F4A460 100%); height: 200px;"></div>
-                        <div class="card-content">
-                            <h3><?php echo $location['name']; ?></h3>
-                            <p class="location-address"><?php echo $location['address']; ?></p>
-                            <p><?php echo $location['description']; ?></p>
-                            
-                            <div class="location-features">
-                                <h4>Ausstattung & Services:</h4>
-                                <ul>
-                                    <li>Hausgemachtes Gelato in über 20 Sorten</li>
-                                    <li>Barista-Kaffee mit ONOMA-Röstung</li>
-                                    <li>Frische Waffeln täglich gebacken</li>
-                                    <li>Parkplätze vorhanden</li>
-                                    <li>Bestellannahme für Eistorten</li>
-                                </ul>
-                            </div>
+
+            <div class="locations-grid">
+                <?php foreach ($companyData['locations'] as $index => $location): ?>
+                <div class="location-card stagger-<?php echo $index + 1; ?>">
+                    <div class="location-header">
+                        <h3><?php echo $location['name']; ?></h3>
+                        <div class="location-status active">
+                            <span class="status-dot"></span>
+                            <span>Geöffnet</span>
                         </div>
                     </div>
+                    
+                    <div class="location-details">
+                        <div class="detail-item">
+                            <strong>Adresse:</strong>
+                            <span><?php echo $location['address']; ?></span>
+                        </div>
+                        <div class="detail-item">
+                            <strong>Parken:</strong>
+                            <span><?php echo $location['parking']; ?></span>
+                        </div>
+                        <div class="detail-item">
+                            <strong>ÖPNV:</strong>
+                            <span><?php echo $location['transport']; ?></span>
+                        </div>
+                    </div>
+
+                    <div class="location-actions">
+                        <a href="tel:01520 9861052" class="location-btn primary">
+                            <span>📞</span> Anrufen
+                        </a>
+                        <a href="standorte.php" class="location-btn secondary">
+                            <span>🏪</span> Details & 3D-Tour
+                        </a>
+                        <a href="https://maps.google.com/?q=<?php echo urlencode($location['address']); ?>" 
+                           target="_blank" class="location-btn secondary">
+                            <span>🗺️</span> Route planen
+                        </a>
+                    </div>
+                </div>
                 <?php endforeach; ?>
             </div>
-            
-            <div class="section-cta">
-                <p>Möchten Sie mehr über unsere Standorte erfahren und sogar einen virtuellen Rundgang machen?</p>
-                <a href="standorte.php" class="btn btn-primary">Standorte entdecken</a>
+        </div>
+    </section>
+
+    <!-- Öffnungszeiten Section -->
+    <section class="opening-hours animate-on-scroll fade-in-up">
+        <div class="container">
+            <div class="hours-content">
+                <div class="hours-info">
+                    <h2>Öffnungszeiten</h2>
+                    <p>Flora öffnet saisonal angepasst - weil das einfach Sinn macht. Frisches Eis braucht die richtige Zeit.</p>
+                    
+                    <div class="hours-grid">
+                        <div class="hours-card current-season">
+                            <div class="season-badge">Aktuell</div>
+                            <h3>März</h3>
+                            <div class="hours-time">Täglich 13-18 Uhr</div>
+                            <p>Perfekt für den Nachmittags-Eis-Moment</p>
+                        </div>
+                        
+                        <div class="hours-card upcoming-season">
+                            <div class="season-badge">Ab April</div>
+                            <h3>Hauptsaison</h3>
+                            <div class="hours-time">Täglich 12-19 Uhr</div>
+                            <p>Volles Programm für echte Eis-Liebhaber</p>
+                        </div>
+                    </div>
+
+                    <div class="hours-notice">
+                        <strong>Aktuelle Zeiten immer auf der <a href="index.php">Startseite</a></strong>
+                        <br>Bei besonderen Anlässen oder Wetter können sich die Zeiten ändern
+                    </div>
+                </div>
+
+                <div class="hours-visual">
+                    <div class="clock-display">
+                        <div class="current-time">
+                            <span class="time-label">Heute geöffnet bis</span>
+                            <span class="time-value">19:00</span>
+                        </div>
+                        <div class="next-opening">
+                            <span>Morgen wieder ab 12:00</span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- Service-Informationen -->
-    <section class="section">
+    <!-- Kontaktformular Section -->
+    <section id="kontaktformular" class="contact-form-section animate-on-scroll fade-in-up">
         <div class="container">
-            <div class="grid grid-3">
-                <div class="card service-card">
-                    <div class="service-icon" style="background: linear-gradient(135deg, #FF6B6B 0%, #FF8E8E 100%); height: 80px; width: 80px; margin: 0 auto 20px;"></div>
-                    <h3>Eistorten auf Bestellung</h3>
-                    <p>Planen Sie eine Feier? Wir kreieren individuelle Eistorten nach Ihren Wünschen. Von klassischen Geschmacksrichtungen bis hin zu ausgefallenen Kreationen.</p>
-                    <p class="service-note">Bestellung mindestens 48 Stunden im Voraus</p>
-                    <a href="events.php" class="btn btn-secondary">Mehr erfahren</a>
+            <div class="form-wrapper">
+                <div class="form-header">
+                    <h2>Schreib uns</h2>
+                    <p>Egal ob Fragen zum Eis, Event-Anfrage oder einfach mal Lust auf ein Gespräch über guten Geschmack.</p>
                 </div>
-                
-                <div class="card service-card">
-                    <div class="service-icon" style="background: linear-gradient(135deg, #4ECDC4 0%, #6ED5CD 100%); height: 80px; width: 80px; margin: 0 auto 20px;"></div>
-                    <h3>Event-Catering</h3>
-                    <p>Wir bringen unser hausgemachtes Gelato zu Ihrer Veranstaltung. Mobile Eisbar für Hochzeiten, Firmenfeiern und private Events.</p>
-                    <p class="service-note">Buchung nach Verfügbarkeit</p>
-                    <a href="events.php" class="btn btn-secondary">Event planen</a>
+
+                <?php if ($message): ?>
+                <div class="form-message <?php echo $messageType; ?>">
+                    <?php echo $message; ?>
                 </div>
-                
-                <div class="card service-card">
-                    <div class="service-icon" style="background: linear-gradient(135deg, #FFE66D 0%, #FFED84 100%); height: 80px; width: 80px; margin: 0 auto 20px;"></div>
-                    <h3>Allergien & Unverträglichkeiten</h3>
-                    <p>Wir beraten Sie gerne zu Inhaltsstoffen und Allergenen. Viele unserer Gelato-Sorten sind auch für Menschen mit Unverträglichkeiten geeignet.</p>
-                    <p class="service-note">Sprechen Sie uns einfach an</p>
-                    <a href="tel:<?php echo $businessPhone; ?>" class="btn btn-secondary">Jetzt anrufen</a>
+                <?php endif; ?>
+
+                <form method="POST" class="contact-form">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="name">Name *</label>
+                            <input type="text" id="name" name="name" require 'includes/header.php';d 
+                                   value="<?php echo $_POST['name'] ?? ''; ?>">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">E-Mail *</label>
+                            <input type="email" id="email" name="email" require 'includes/header.php';d
+                                   value="<?php echo $_POST['email'] ?? ''; ?>">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="phone">Telefon</label>
+                            <input type="tel" id="phone" name="phone"
+                                   value="<?php echo $_POST['phone'] ?? ''; ?>">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="subject">Betreff</label>
+                            <select id="subject" name="subject">
+                                <option value="">Thema wählen</option>
+                                <option value="allgemeine-frage">Allgemeine Frage</option>
+                                <option value="event-catering">Event & Catering</option>
+                                <option value="eistorte">Eistorten-Bestellung</option>
+                                <option value="feedback">Feedback</option>
+                                <option value="sonstiges">Sonstiges</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label for="message">Deine Nachricht *</label>
+                        <textarea id="message" name="message" rows="6" require 'includes/header.php';d 
+                                  placeholder="Erzähl uns, womit wir dir helfen können..."><?php echo $_POST['message'] ?? ''; ?></textarea>
+                    </div>
+
+                    <div class="form-submit">
+                        <button type="submit" class="cta-button primary large">
+                            <span>📨</span> Nachricht senden
+                        </button>
+                        <div class="form-info">
+                            <span class="response-time">⚡ Antwort binnen 24h garantiert</span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Anfahrt Widget Section -->
+    <section class="directions-widget animate-on-scroll fade-in-up">
+        <div class="container">
+            <div class="widget-header">
+                <h2>Anfahrt & Parken</h2>
+                <p>So findest du uns am schnellsten - egal ob mit dem Auto, Bus oder Fahrrad.</p>
+            </div>
+
+            <div class="directions-grid">
+                <div class="direction-method stagger-1">
+                    <div class="method-icon">🚗</div>
+                    <h3>Mit dem Auto</h3>
+                    <ul>
+                        <li><strong>Marrensdamm:</strong> Kostenlose Parkplätze direkt vor dem Laden</li>
+                        <li><strong>Weiche:</strong> Großer Parkplatz am Standort verfügbar</li>
+                        <li>Beide Standorte gut mit dem Auto erreichbar</li>
+                    </ul>
+                    <a href="https://maps.google.com/?q=Flora+Kaffee+Eisbar+Flensburg" 
+                       target="_blank" class="direction-btn">
+                        <span>🗺️</span> Route planen
+                    </a>
+                </div>
+
+                <div class="direction-method stagger-2">
+                    <div class="method-icon">🚌</div>
+                    <h3>Mit Bus & Bahn</h3>
+                    <ul>
+                        <li><strong>Marrensdamm:</strong> Bus Linie 1, 2 - Haltestelle Marrensdamm</li>
+                        <li><strong>Weiche:</strong> Bus Linie 4 - Haltestelle Weiche Dorf</li>
+                        <li>Beide nur wenige Gehminuten von der Haltestelle</li>
+                    </ul>
+                    <a href="https://www.nah.sh" target="_blank" class="direction-btn">
+                        <span>🚌</span> Fahrplan NAH.SH
+                    </a>
+                </div>
+
+                <div class="direction-method stagger-3">
+                    <div class="method-icon">🚴</div>
+                    <h3>Mit dem Fahrrad</h3>
+                    <ul>
+                        <li>Fahrradständer an beiden Standorten vorhanden</li>
+                        <li>Gut über Flensburger Radwege erreichbar</li>
+                        <li>Perfect für die Eis-Tour durch die Stadt</li>
+                    </ul>
+                    <a href="standorte.php" class="direction-btn">
+                        <span>📍</span> Standort-Details
+                    </a>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- FAQ Section -->
-    <section class="section section-alt">
+    <!-- Quick Actions -->
+    <section class="quick-actions animate-on-scroll fade-in-up">
         <div class="container">
-            <div class="section-header">
-                <h2>Häufige Fragen</h2>
-                <p class="section-intro">Hier finden Sie Antworten auf die wichtigsten Fragen rund um Flora Kaffee & Eisbar</p>
+            <div class="actions-grid">
+                <a href="tel:01520 9861052" class="quick-action call-action stagger-1">
+                    <div class="action-icon">📞</div>
+                    <div class="action-content">
+                        <h3>Jetzt anrufen</h3>
+                        <p>01520 9861052</p>
+                    </div>
+                </a>
+
+                <a href="events.php" class="quick-action event-action stagger-2">
+                    <div class="action-icon">🎉</div>
+                    <div class="action-content">
+                        <h3>Event planen</h3>
+                        <p>Catering & Mobile Eistresen</p>
+                    </div>
+                </a>
+
+                <a href="eismanufaktur.php" class="quick-action manufactory-action stagger-3">
+                    <div class="action-icon">🏭</div>
+                    <div class="action-content">
+                        <h3>Manufaktur besuchen</h3>
+                        <p>Erlebe wie Eis entsteht</p>
+                    </div>
+                </a>
+
+                <a href="standorte.php" class="quick-action tour-action stagger-4">
+                    <div class="action-icon">🏪</div>
+                    <div class="action-content">
+                        <h3>3D-Rundgang</h3>
+                        <p>Virtuell durch unsere Läden</p>
+                    </div>
+                </a>
             </div>
-            
-            <div class="faq-container">
-                <div class="faq-item">
-                    <h3>Wie lange im Voraus muss ich eine Eistorte bestellen?</h3>
-                    <p>Eistorten sollten mindestens 48 Stunden im Voraus bestellt werden. Für komplexe Designs oder größere Mengen empfehlen wir eine Vorlaufzeit von einer Woche.</p>
-                </div>
-                
-                <div class="faq-item">
-                    <h3>Haben Sie auch vegane oder laktosefreie Optionen?</h3>
-                    <p>Ja! Wir
+        </div>
+    </section>
+</main>
+
+<!-- Sticky Trust Badge -->
+<div class="sticky-trust-badge">
+    <span class="badge-icon">🏭</span>
+    <span class="badge-text">Täglich frisch in eigener Manufaktur</span>
+</div>
+
+<?php require 'includes/header.php'; 'includes/footer.php'; ?>
