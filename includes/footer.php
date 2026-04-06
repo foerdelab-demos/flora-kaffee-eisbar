@@ -1,94 +1,101 @@
-<?php
-$firmendaten = [
-    "name" => "Flora Kaffee & Eisbar",
-    "phone" => "01520 9861052",
-    "address" => "Marrensdamm 4, 24944 Flensburg, Germany",
-    "city" => "Flensburg",
-    "opening_hours" => "März: Täglich 13–18 Uhr, Ab April: Täglich 12–19 Uhr",
-    "specialties" => ["Hausgemachtes Gelato", "Barista-Kaffee mit ONOMA-Röstung", "Frische Waffeln", "Zwei Standorte", "Eistorten", "3D-Rundgänge", "Event-Catering"]
-];
-
-$navigation = [
-    ["label" => "Startseite", "href" => "index.php"],
-    ["label" => "Speisekarte", "href" => "speisekarte.php"],
-    ["label" => "Standorte", "href" => "standorte.php"],
-    ["label" => "Eismanufaktur", "href" => "eismanufaktur.php"],
-    ["label" => "Events & Eistorten", "href" => "events.php"],
-    ["label" => "Kontakt", "href" => "kontakt.php"]
-];
-?>
-
 </main>
 
-<footer class="bg-dark text-light py-5">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-3 col-md-6 mb-4">
-                <h5 class="text-primary mb-3"><?= $firmendaten['name'] ?></h5>
+<footer class="bg-gray-800 text-white py-12">
+    <div class="container mx-auto px-4">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <!-- Firmeninfo -->
+            <div>
+                <h3 class="text-xl font-bold mb-4">Flora Kaffee & Eisbar</h3>
+                <p class="mb-2">Marrensdamm 4</p>
+                <p class="mb-2">24944 Flensburg, Germany</p>
                 <p class="mb-2">
-                    <i class="fas fa-map-marker-alt me-2"></i>
-                    <?= $firmendaten['address'] ?>
-                </p>
-                <p class="mb-2">
-                    <i class="fas fa-phone me-2"></i>
-                    <a href="tel:<?= $firmendaten['phone'] ?>" class="text-light text-decoration-none">
-                        <?= $firmendaten['phone'] ?>
+                    <a href="tel:015209861052" class="hover:text-yellow-300">
+                        📞 01520 9861052
                     </a>
                 </p>
             </div>
 
-            <div class="col-lg-3 col-md-6 mb-4">
-                <h5 class="text-primary mb-3">Quick Links</h5>
-                <ul class="list-unstyled">
-                    <?php foreach ($navigation as $item): ?>
-                    <li class="mb-2">
-                        <a href="<?= $item['href'] ?>" class="text-light text-decoration-none">
-                            <i class="fas fa-chevron-right me-2"></i>
-                            <?= $item['label'] ?>
-                        </a>
-                    </li>
-                    <?php endforeach; ?>
+            <!-- Quick Links -->
+            <div>
+                <h3 class="text-xl font-bold mb-4">Quick Links</h3>
+                <ul class="space-y-2">
+                    <li><a href="index.php" class="hover:text-yellow-300">Startseite</a></li>
+                    <li><a href="speisekarte.php" class="hover:text-yellow-300">Speisekarte</a></li>
+                    <li><a href="standorte.php" class="hover:text-yellow-300">Standorte</a></li>
+                    <li><a href="eismanufaktur.php" class="hover:text-yellow-300">Eismanufaktur</a></li>
+                    <li><a href="events.php" class="hover:text-yellow-300">Events & Catering</a></li>
+                    <li><a href="kontakt.php" class="hover:text-yellow-300">Kontakt</a></li>
                 </ul>
             </div>
 
-            <div class="col-lg-3 col-md-6 mb-4">
-                <h5 class="text-primary mb-3">Öffnungszeiten</h5>
-                <p class="mb-3"><?= $firmendaten['opening_hours'] ?></p>
-                <p class="text-info mb-0">
-                    <i class="fas fa-info-circle me-2"></i>
-                    Aktuelle Öffnungszeiten können saisonal variieren
-                </p>
+            <!-- Öffnungszeiten -->
+            <div>
+                <h3 class="text-xl font-bold mb-4">Öffnungszeiten</h3>
+                <div class="space-y-1">
+                    <p><strong>März:</strong></p>
+                    <p>Täglich 13-18 Uhr</p>
+                    <p><strong>Ab April:</strong></p>
+                    <p>Täglich 12-19 Uhr</p>
+                </div>
             </div>
 
-            <div class="col-lg-3 col-md-6 mb-4">
-                <h5 class="text-primary mb-3">Unsere Spezialitäten</h5>
-                <ul class="list-unstyled">
-                    <?php foreach (array_slice($firmendaten['specialties'], 0, 5) as $specialty): ?>
-                    <li class="mb-1">
-                        <i class="fas fa-star text-warning me-2"></i>
-                        <?= $specialty ?>
-                    </li>
-                    <?php endforeach; ?>
+            <!-- Spezialitäten -->
+            <div>
+                <h3 class="text-xl font-bold mb-4">Unsere Spezialitäten</h3>
+                <ul class="space-y-1 text-sm">
+                    <li>🍦 Hausgemachtes Gelato</li>
+                    <li>☕ ONOMA-Röstung Kaffee</li>
+                    <li>🧇 Frische Waffeln</li>
+                    <li>🎂 Eistorten-Konfigurator</li>
+                    <li>🚚 Mobile Eistresen</li>
+                    <li>📱 3D-Rundgänge</li>
                 </ul>
             </div>
         </div>
 
-        <hr class="my-4 border-secondary">
+        <hr class="my-8 border-gray-600">
         
-        <div class="row align-items-center">
-            <div class="col-md-6">
-                <p class="mb-0">
-                    &copy; <?= date('Y') ?> <?= $firmendaten['name'] ?>. Alle Rechte vorbehalten.
-                </p>
-            </div>
-            <div class="col-md-6 text-md-end">
-                <small class="text-muted">
-                    Demo erstellt von <strong>FördeLab</strong>
-                </small>
-            </div>
+        <div class="flex flex-col md:flex-row justify-between items-center">
+            <p>&copy; <?= date('Y') ?> Flora Kaffee & Eisbar. Alle Rechte vorbehalten.</p>
+            <p class="text-sm text-gray-400 mt-2 md:mt-0">
+                Demo erstellt von <a href="#" class="text-yellow-300 hover:text-yellow-200">FördeLab</a>
+            </p>
         </div>
     </div>
 </footer>
 
+    <script src="assets/js/animations.js"></script>
+
+<!-- Sticky Contact Bar (Mobile) -->
+<div class="sticky-contact-bar">
+  <a href="tel:015209861052" class="sticky-btn sticky-btn--call">
+    📞 Anrufen
+  </a>
+  <a href="kontakt.php" class="sticky-btn sticky-btn--contact">
+    ✉️ Kontakt
+  </a>
+</div>
+
+<!-- Floating Action Button (Desktop) -->
+<div class="fab-container">
+  <button class="fab-main" aria-label="Kontakt">💬</button>
+  <div class="fab-options">
+    <a href="tel:015209861052" class="fab-option" aria-label="Anrufen">📞</a>
+    <a href="kontakt.php" class="fab-option" aria-label="Kontakt">✉️</a>
+  </div>
+</div>
+
+<!-- Exit Intent Popup -->
+<div id="exit-popup" class="exit-popup" style="display:none">
+  <div class="exit-popup__inner">
+    <button class="exit-popup__close" aria-label="Schliessen">&times;</button>
+    <h3>Bevor Sie gehen...</h3>
+    <p>Haben Sie Fragen? Wir rufen Sie kostenlos zurueck.</p>
+    <form class="exit-popup__form" method="post" action="kontakt.php">
+      <input type="tel" name="callback_phone" placeholder="Ihre Telefonnummer" required>
+      <button type="submit" class="btn btn-primary cta-primary">Jetzt zurueckrufen lassen</button>
+    </form>
+  </div>
+</div>
 </body>
 </html>
